@@ -20,6 +20,8 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->package('joselfonseca/laravel-api-tools');
+        /** Lets create an alias **/
+        AliasLoader::getInstance()->alias('ApiTools', 'Joselfonseca\LaravelApiTools\ApiTools');
     }
 
     /**

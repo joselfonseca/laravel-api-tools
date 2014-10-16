@@ -10,16 +10,15 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
-        "lucadegasperi/oauth2-server-laravel": "3.*",
         "league/fractal": "0.9.*"
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
+            
         ],
         "psr-0": {
             "Joselfonseca\\LaravelApiTools\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
