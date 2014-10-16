@@ -13,8 +13,9 @@ class ApiTools {
     
     /**
      * Respond with a Fractal Item
-     * @param Object $item
-     * @return String JSON
+     * @param object $item
+     * @param array $includes
+     * @return type
      */
     public static function Item($item, $includes = []){
         $responder = new Responder;
