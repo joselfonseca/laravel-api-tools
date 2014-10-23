@@ -1,6 +1,6 @@
 {
     "name": "joselfonseca/laravel-api-tools",
-    "description": "Some tools for Laravel API development, nothing really new, just warpers and helper stuff",
+    "description": "Some tools for Laravel API development, nothing really new, just wrapers and helper stuff",
     "authors": [
         {
             "name": "Jose Luis Fonseca",

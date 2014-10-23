@@ -10,16 +10,16 @@ namespace Joselfonseca\LaravelApiTools\Interfaces;
 interface ResponderInterface {
     
     /**
+     * respond with a simple json from a simple array
+     * @param array $data
+     */
+    public function simpleJson($data = []);
+    
+    /**
      * Will respond with a json object of a single resource
      * @param Object $item
      */
-    public function item($item);
-    
-    /**
-     * Will respond with a formated collection of resources and meta data
-     * @param Object $collection
-     */
-    public function collection($collection);
+    public function item($item, $includes = [], $extraData = []);
     
     /**
      * Will respond with status 400 and validation errors
@@ -30,13 +30,7 @@ interface ResponderInterface {
     /**
      * Will respond with 404, whenever a page or resource is not found
      */
-    public function resourceNotFound();
-    
-    /**
-     * Will respond with 204 since there is no error but there is also no
-     * content found for the resource
-     */
-    public function resourceNotAvailable();
+    public function resourceNotFound($message = "");
     
     /**
      * Will respond with a status 500, provides an error code and 

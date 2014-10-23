@@ -4,6 +4,7 @@ namespace Joselfonseca\LaravelApiTools;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Joselfonseca\LaravelApiTools\Responders\JsonResponder;
 
 class LaravelApiToolsServiceProvider extends ServiceProvider {
 
@@ -22,7 +23,11 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
     public function boot() {
         $this->package('joselfonseca/laravel-api-tools');
         /** Lets create an alias **/
-        AliasLoader::getInstance()->alias('ApiTools', 'Joselfonseca\LaravelApiTools\ApiTools');
+        AliasLoader::getInstance()->alias('ApiToolsResponder', 'Joselfonseca\LaravelApiTools\ApiToolsResponder');
+        /** Bind the default clases **/
+        $this->app->bind('JsonResponder', function() {
+            return new JsonResponder;
+        });
     }
 
     /**
