@@ -1,6 +1,7 @@
 {
     "name": "joselfonseca/laravel-api-tools",
     "description": "Some tools for Laravel API development, nothing really new, just wrapers and helper stuff",
+    "license": "MIT",    
     "authors": [
         {
             "name": "Jose Luis Fonseca",
