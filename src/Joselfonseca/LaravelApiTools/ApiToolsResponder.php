@@ -12,11 +12,12 @@ class ApiToolsResponder {
     /**
      * Respond with a simple array to a simple JSON
      * @param array $data
+     * @param integer $responseCode
      * @return Illuminate\Support\Facades\Response
      */
-    public static function simpleJson($data = []){
+    public static function simpleJson($data = [], $responseCode = 200){
         $responder = \App::make('JsonResponder');
-        return $responder->simpleJson($data);
+        return $responder->simpleJson($data, $responseCode);
     }
 
     /**
@@ -59,6 +60,17 @@ class ApiToolsResponder {
     public static function validationError($validator){
         $responder = \App::make('JsonResponder');
         return $responder->validationError($validator);
+    }
+    /**
+     * If a resource is access without permision, use this method to return the 
+     * Auth exception
+     * @param string $message
+     * @param string $errorCode
+     * @return Illuminate\Support\Facades\Response
+     */
+    public static function unauthorizedAccess($message = "You dont have permissions for this resource", $errorCode = "AuthException"){
+        $responder = \App::make('JsonResponder');
+        return $responder->unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException");
     }
     
 }

@@ -11,9 +11,10 @@ interface ResponderInterface {
     
     /**
      * respond with a simple json from a simple array
+     * @param integer $responseCode
      * @param array $data
      */
-    public function simpleJson($data = []);
+    public function simpleJson($data = [], $responseCode = 200);
     
     /**
      * Will respond with a json object of a single resource
@@ -39,5 +40,11 @@ interface ResponderInterface {
      * @param String $errorDescription
      */
     public function appError($errorCode, $errorDescription);
+    
+    /**
+     * Will respond with a message and a 401 for no access
+     * @param type $message
+     */
+    public function unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException");
     
 }
