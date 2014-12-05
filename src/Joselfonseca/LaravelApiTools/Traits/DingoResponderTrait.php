@@ -2,20 +2,23 @@
 
 namespace Joselfonseca\LaravelApiTools\Traits;
 
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
-
 /**
  * Responses for DingoApi
  * @author Rigo B Castro
  * @author Jose Fonseca <jose@ditecnologia.com>
  */
 trait DingoResponderTrait {
+    
+    protected $searchParam = 'search';
+    protected $searchFirstDelimiter = ':';
+    protected $searchSecondDelimiter = '|';
+    protected $searchDefaultCondition = '=';
 
     // ----------------------------------------------------------------------
 
     public function ResponseWithPaginator($model, $transformer) {
-        
-        $model = $this->BuildFilter($model);
+
+        $model = $this->parseSearchParams($model);
 
         $limit = \Input::get('limit', 0);
 
@@ -29,14 +32,13 @@ trait DingoResponderTrait {
     // ----------------------------------------------------------------------
 
     public function ResponseWithCollection($model, $transformer) {
-        
-        $model = $model->get();
-        
 
-        if($model->isEmpty()){
-         
+        $model = $model->get();
+
+
+        if ($model->isEmpty()) {
+
             return $this->response->noContent();
-            
         }
 
         return $this->response->collection($model, $transformer);
@@ -45,7 +47,7 @@ trait DingoResponderTrait {
     // ----------------------------------------------------------------------
 
     public function ResponseWithItem($idSlug, $model, $transformer) {
-        
+
         if (is_numeric($idSlug)) {
             $model = $model->find($idSlug);
         } elseif (is_string($idSlug)) {
@@ -60,25 +62,35 @@ trait DingoResponderTrait {
     }
 
     // ----------------------------------------------------------------------
-    
-    public function BuildFilter($model){
-        
-        $search = \Input::get('search', 0);
-        /** if no filter then nothing to do **/
-        if(empty($search)){
-            return $model;
+
+    protected function parseSearchParams($model) {
+        $modelReturn = $model;
+
+        if (\Input::has($this->searchParam)) {
+            $search = \Input::get($this->searchParam);
+
+            $searchExplode = explode($this->searchFirstDelimiter, $search);
+
+            foreach ($searchExplode as $searchExplodeItem) {
+                preg_match_all('/([\w]+)\(([^\)]+)\)/', $searchExplodeItem, $allModifiersArr);
+
+                $column = $allModifiersArr[1][0];
+                $valueCond = explode($this->searchSecondDelimiter, $allModifiersArr[2][0], 2);
+
+                if (!empty($valueCond)) {
+                    $value = $valueCond[0];
+                    $condition = $this->searchDefaultCondition;
+
+                    if (!empty($valueCond[1])) {
+                        $condition = $valueCond[1];
+                    }
+
+                    $modelReturn = $modelReturn->where($column, $condition, $value);
+                }
+            }
         }
-        
-        $groups = explode(',', $search);
-        
-        foreach($groups as $group){
-            $group = trim($group);
-            preg_match_all('/([\w]+)\(([^\)]+)\)/', $group, $modifier);
-            $column = $modifier[1][0];
-            list($condition, $value) = explode('|', $modifier[2][0]);
-            $model = $model->where($column,$condition,$value);
-        }
-        
-        return $model;
+
+        return $modelReturn;
     }
+
 }
