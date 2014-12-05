@@ -14,6 +14,8 @@ trait DingoResponderTrait {
     // ----------------------------------------------------------------------
 
     public function ResponseWithPaginator($model, $transformer) {
+        
+        $model = $this->BuildFilter($model);
 
         $limit = \Input::get('limit', 0);
 
@@ -29,8 +31,13 @@ trait DingoResponderTrait {
     public function ResponseWithCollection($model, $transformer) {
         
         $model = $model->get();
+        
 
-        $model->isEmpty() && $this->setStatusCode(204);
+        if($model->isEmpty()){
+         
+            return $this->response->noContent();
+            
+        }
 
         return $this->response->collection($model, $transformer);
     }
@@ -53,4 +60,25 @@ trait DingoResponderTrait {
     }
 
     // ----------------------------------------------------------------------
+    
+    public function BuildFilter($model){
+        
+        $search = \Input::get('search', 0);
+        /** if no filter then nothing to do **/
+        if(empty($search)){
+            return $model;
+        }
+        
+        $groups = explode(',', $search);
+        
+        foreach($groups as $group){
+            $group = trim($group);
+            preg_match_all('/([\w]+)\(([^\)]+)\)/', $group, $modifier);
+            $column = $modifier[1][0];
+            list($condition, $value) = explode('|', $modifier[2][0]);
+            $model = $model->where($column,$condition,$value);
+        }
+        
+        return $model;
+    }
 }
