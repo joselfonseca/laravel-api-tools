@@ -20,47 +20,35 @@ trait DingoResponderTrait {
     // ----------------------------------------------------------------------
 
     public function ResponseWithPaginator($model, $transformer) {
-
         $model = $this->parseSearchParams($model);
-
         $limit = \Input::get('limit', 0);
-
         if (empty($limit)) {
             return $this->ResponseWithCollection($model, $transformer);
         }
-
         return $this->response->paginator($model->paginate($limit), $transformer);
     }
 
     // ----------------------------------------------------------------------
 
     public function ResponseWithCollection($model, $transformer) {
-
         $model = $model->get();
-
-
         if ($model->isEmpty()) {
-
             return $this->response->noContent();
         }
-
         return $this->response->collection($model, $transformer);
     }
 
     // ----------------------------------------------------------------------
 
     public function ResponseWithItem($idSlug, $model, $transformer) {
-
         if (is_numeric($idSlug)) {
             $model = $model->find($idSlug);
         } elseif (is_string($idSlug)) {
             $model = $model->where('slug', '=', $idSlug)->firstOrFail();
         }
-
         if (empty($model)) {
             return $this->errorNotFound();
         }
-
         return $this->response->item($model, $transformer);
     }
 
@@ -68,17 +56,13 @@ trait DingoResponderTrait {
 
     protected function parseSearchParams($model) {
         $modelReturn = $model;
-        
         if (\Input::has($this->searchParam)) {
-            
             $search = \Input::get($this->searchParam);
             $searchExplode = explode($this->searchFirstDelimiter, $search);
             foreach ($searchExplode as $searchExplodeItem) {
                 $modelReturn = $this->parseParam($searchExplodeItem, $modelReturn);
             }
-            
         }
-
         return $modelReturn;
     }
     
