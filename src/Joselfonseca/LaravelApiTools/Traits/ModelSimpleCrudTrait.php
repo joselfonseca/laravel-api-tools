@@ -24,7 +24,7 @@ trait ModelSimpleCrudTrait {
             $this->validate($input);
             $model = $this->create($input);
         } catch (ValidationException $e) {
-            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
             }
             throw new ValidationExceptionUseSimpleResponder($e->validator);
@@ -62,12 +62,12 @@ trait ModelSimpleCrudTrait {
             }
             $model->save();
         } catch (ValidationException $e) {
-            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
             }
             throw new ValidationExceptionUseSimpleResponder($e->validator);
         } catch(ModelNotFoundException $e){
-            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
             }
             throw new ModelNotFoundExceptionUseSimpleResponder($e->validator);
@@ -84,7 +84,7 @@ trait ModelSimpleCrudTrait {
             $model = $this->findOrFail($id);
             $model->delete();
         } catch(ModelNotFoundException $e){
-            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
             }
             throw new ModelNotFoundExceptionUseSimpleResponder();
