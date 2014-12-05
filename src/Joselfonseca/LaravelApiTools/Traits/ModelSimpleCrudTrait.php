@@ -16,7 +16,7 @@ trait ModelSimpleCrudTrait {
 
     /**
      * Create a resource
-     * @param type $input
+     * @param array $input
      * @return type
      */
     public function CreateResource($input) {
@@ -34,7 +34,7 @@ trait ModelSimpleCrudTrait {
 
     /**
      * Validate input
-     * @param type $input
+     * @param array $input
      * @throws ValidationException
      */
     public function validate($input) {
@@ -48,8 +48,8 @@ trait ModelSimpleCrudTrait {
     }
     /**
      * Update a resource
-     * @param type $id
-     * @param type $input
+     * @param int $id
+     * @param array $input
      * @return type
      * @throws \Dingo\Api\Exception\StoreResourceFailedException
      */
@@ -76,7 +76,7 @@ trait ModelSimpleCrudTrait {
     }
     /**
      * Delete a resource
-     * @param type $id
+     * @param int $id
      * @return type
      */
     public function deleteResource($id){
