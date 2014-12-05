@@ -68,12 +68,15 @@ trait DingoResponderTrait {
 
     protected function parseSearchParams($model) {
         $modelReturn = $model;
+        
         if (\Input::has($this->searchParam)) {
+            
             $search = \Input::get($this->searchParam);
             $searchExplode = explode($this->searchFirstDelimiter, $search);
             foreach ($searchExplode as $searchExplodeItem) {
-                $modelReturn = $this->_parseParam($searchExplodeItem, $modelReturn);
+                $modelReturn = $this->parseParam($searchExplodeItem, $modelReturn);
             }
+            
         }
 
         return $modelReturn;
@@ -81,7 +84,7 @@ trait DingoResponderTrait {
     
     // ----------------------------------------------------------------------
 
-    protected function _parseParam($searchExplodeItem, $modelReturn) {
+    protected function parseParam($searchExplodeItem, $modelReturn) {
         preg_match_all('/([\w]+)\(([^\)]+)\)/', $searchExplodeItem, $allModifiersArr);
         $column = $allModifiersArr[1][0];
         $valueCond = explode($this->searchSecondDelimiter, $allModifiersArr[2][0], 3);
