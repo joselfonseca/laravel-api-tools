@@ -3,7 +3,8 @@
 namespace Joselfonseca\LaravelApiTools\Traits;
 
 use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
-use Joselfonseca\LaravelApiTools\ApiToolsResponder;
+use Joselfonseca\LaravelApiTools\Exceptions\ValidationExceptionUseSimpleResponder;
+use Joselfonseca\LaravelApiTools\Exceptions\ModelNotFoundExceptionUseSimpleResponder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -26,7 +27,7 @@ trait ModelSimpleCrudTrait {
             if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
             }
-            return ApiToolsResponder::validationError($e->validator);
+            throw new ValidationExceptionUseSimpleResponder($e->validator);
         }
         return $model;
     }
@@ -64,9 +65,12 @@ trait ModelSimpleCrudTrait {
             if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
                 throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
             }
-            return ApiToolsResponder::validationError($e->validator);
+            throw new ValidationExceptionUseSimpleResponder($e->validator);
         } catch(ModelNotFoundException $e){
-            return ApiToolsResponder::resourceNotFound(\Config::get('laravel-api-tools::ResourceNotFound'));
+            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+                throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
+            }
+            throw new ModelNotFoundExceptionUseSimpleResponder($e->validator);
         }
         return $model;
     }
@@ -80,9 +84,12 @@ trait ModelSimpleCrudTrait {
             $model = $this->findOrFail($id);
             $model->delete();
         } catch(ModelNotFoundException $e){
-            return ApiToolsResponder::resourceNotFound(\Config::get('laravel-api-tools::ResourceNotFound'));
+            if (\Config::get('laravel-api-tools::responder::responder') === "dingo") {
+                throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
+            }
+            throw new ModelNotFoundExceptionUseSimpleResponder();
         }
-        return ApiToolsResponder::simpleJson(['message' => \Config::get('laravel-api-tools::ResourceDeleted')]);
+        return true;
     }
 
 }

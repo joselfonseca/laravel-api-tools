@@ -5,6 +5,8 @@ namespace Joselfonseca\LaravelApiTools;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Joselfonseca\LaravelApiTools\Responders\JsonResponder;
+use Joselfonseca\LaravelApiTools\Exceptions\ModelNotFoundExceptionUseSimpleResponder;
+use Joselfonseca\LaravelApiTools\Exceptions\ValidationExceptionUseSimpleResponder;
 
 class LaravelApiToolsServiceProvider extends ServiceProvider {
 
@@ -22,11 +24,18 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->package('joselfonseca/laravel-api-tools');
-        /** Lets create an alias **/
+        /** Lets create an alias * */
         AliasLoader::getInstance()->alias('ApiToolsResponder', 'Joselfonseca\LaravelApiTools\ApiToolsResponder');
-        /** Bind the default clases **/
+        /** Bind the default clases * */
         $this->app->bind('JsonResponder', function() {
             return new JsonResponder;
+        });
+        /** Validation Errors to be hande with simple responder * */
+        \App::error(function(ValidationExceptionUseSimpleResponder $e) {
+            return \ApiToolsResponder::validationError($e->validator);
+        });
+        \App::error(function(ModelNotFoundExceptionUseSimpleResponder $e) {
+            return \ApiToolsResponder::resourceNotFound(\Config::get('laravel-api-tools::ResourceNotFound'));
         });
     }
 
