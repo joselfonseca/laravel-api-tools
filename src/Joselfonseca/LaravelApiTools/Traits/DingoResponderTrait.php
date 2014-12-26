@@ -31,25 +31,28 @@ trait DingoResponderTrait {
     // ----------------------------------------------------------------------
 
     public function ResponseWithCollection($model, $transformer) {
-        $model = $model->get();
-        if ($model->isEmpty()) {
-            return $this->response->noContent();
+        if ($model instanceof \Eloquent) {
+            return $this->RespondEloquentCollection($model, $transformer);
         }
-        return $this->response->collection($model, $transformer);
+        return $this->RespondDbArrayCollection($model, $transformer);
     }
 
     // ----------------------------------------------------------------------
 
     public function ResponseWithItem($idSlug, $model, $transformer) {
         if (is_numeric($idSlug)) {
-            $model = $model->find($idSlug);
+            $model = $model->where('id',$idSlug);
         } elseif (is_string($idSlug)) {
-            $model = $model->where('slug', '=', $idSlug)->firstOrFail();
+            $model = $model->where('slug', '=', $idSlug);
         }
+        $model = $model->first();
         if (empty($model)) {
             return $this->errorNotFound();
         }
-        return $this->response->item($model, $transformer);
+        if($model instanceof \Eloquent){
+            return $this->RespondEloquentItem($model, $transformer);
+        }
+        return $this->RespondDbItem($model, $transformer);
     }
 
     // ----------------------------------------------------------------------
@@ -65,7 +68,7 @@ trait DingoResponderTrait {
         }
         return $modelReturn;
     }
-    
+
     // ----------------------------------------------------------------------
 
     protected function parseParam($searchExplodeItem, $modelReturn) {
@@ -88,6 +91,41 @@ trait DingoResponderTrait {
             return $modelReturn->where($column, $condition, $value);
         }
         return $modelReturn->orWhere($column, $condition, $value);
+    }
+    
+    // ----------------------------------------------------------------------
+
+    protected function RespondEloquentCollection($model, $transformer) {
+        $model = $model->get();
+        if ($model->isEmpty()) {
+            return $this->response->noContent();
+        }
+        return $this->response->collection($model, $transformer);
+    }
+    
+    // ----------------------------------------------------------------------
+    
+    protected function RespondDbArrayCollection($model, $transformer){
+        if ($model->count() === 0) {
+            return $this->response->noContent();
+        }
+        $collection = new \League\Fractal\Resource\Collection($model->get(), $transformer);
+        $manager = new \League\Fractal\Manager;
+        return $this->response->array($manager->createData($collection)->toArray());
+    }
+    
+    // ----------------------------------------------------------------------
+    
+    protected function RespondEloquentItem($model, $transformer){
+        return $this->response->item($model, $transformer);
+    }
+    
+    // ----------------------------------------------------------------------
+    
+    protected function RespondDbItem($model, $transformer){
+        $item = new \League\Fractal\Resource\Item($model, $transformer);
+        $manager = new \League\Fractal\Manager;
+        return $this->response->array($manager->createData($item)->toArray());
     }
 
 }
