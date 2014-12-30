@@ -25,7 +25,7 @@ class JsonResponder implements ResponderInterface{
     /**
      * set the common headers for the response and return it
      */
-    private function _respond(){
+    private function respond(){
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->response->header('Content-Type', 'application/json');
         return $this->response;
@@ -38,7 +38,7 @@ class JsonResponder implements ResponderInterface{
      */
     public function simpleJson($data = [], $responseCode = 200){
         $this->response = $this->laravelResponse->make(json_encode($data), $responseCode);
-        return $this->_respond();
+        return $this->respond();
     }
     /**
      * Use it or error responses, after a try catch or App::error
@@ -48,7 +48,7 @@ class JsonResponder implements ResponderInterface{
      */
     public function appError($errorCode = "Exception", $errorDescription = "The app encounter an error not defined") {
         $this->response = $this->laravelResponse->make(json_encode(['ErrorCode' => $errorCode, 'ErrorDescription' => $errorDescription]), 500);
-        return $this->_respond();
+        return $this->respond();
     }
     /**
      * Get a fractal item or collection and parse it's includes as seccond parameter.
@@ -61,7 +61,7 @@ class JsonResponder implements ResponderInterface{
         $data = $manager->createData($item)->toArray();
         $finalData = array_merge($extraData, $data);
         $this->response = $this->laravelResponse->make(json_encode($finalData), 200);
-        return $this->_respond();
+        return $this->respond();
     }
     /**
      * If a resource is not found because the route does not exsist deliver a 404
@@ -70,7 +70,7 @@ class JsonResponder implements ResponderInterface{
      */
     public function resourceNotFound($message = "We could not find what you were looking for") {
         $this->response = $this->laravelResponse->make(json_encode(['message' => $message]), 404);
-        return $this->_respond();
+        return $this->respond();
     }
     /**
      * Pass the validator and it will build the response with the error messages
@@ -80,7 +80,7 @@ class JsonResponder implements ResponderInterface{
     public function validationError($validator) {
         $messages = $validator->messages();
         $this->response = $this->laravelResponse->make(json_encode(['ErrorCode' => 'ValidationFail', 'ErrorDescription' => 'The input validation failed', 'errors' => $messages->all()]), 400);
-        return $this->_respond();
+        return $this->respond();
     }
     /**
      * If there is no access to the resource, respond with a 401
@@ -89,7 +89,7 @@ class JsonResponder implements ResponderInterface{
      */
     public function unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException"){
         $this->response = $this->laravelResponse->make(json_encode(['message' => $message, 'ErrorCode' => $errorCode]), 404);
-        return $this->_respond();
+        return $this->respond();
     }
 
 }
