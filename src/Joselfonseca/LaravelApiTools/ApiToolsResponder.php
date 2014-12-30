@@ -27,7 +27,7 @@ class ApiToolsResponder {
      * @param array $extra extra keys to insert in the response
      * @return Illuminate\Support\Facades\Response
      */
-    public static function Fractal($item, $includes = [], $extra = []){
+    public static function fractal($item, $includes = [], $extra = []){
         $responder = \App::make('JsonResponder');
         return $responder->item($item, $includes, $extra);
     }
@@ -38,7 +38,7 @@ class ApiToolsResponder {
      * @param string $errorDescription
      * @return Illuminate\Support\Facades\Response
      */
-    public static function AppError($errorCode = "Exception", $errorDescription = "The app encounter an error not defined"){
+    public static function appError($errorCode = "Exception", $errorDescription = "The app encounter an error not defined"){
         $responder = \App::make('JsonResponder');
         return $responder->appError($errorCode, $errorDescription);
     }
@@ -70,7 +70,7 @@ class ApiToolsResponder {
      */
     public static function unauthorizedAccess($message = "You dont have permissions for this resource", $errorCode = "AuthException"){
         $responder = \App::make('JsonResponder');
-        return $responder->unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException");
+        return $responder->unauthorized($message, $errorCode);
     }
     
 }

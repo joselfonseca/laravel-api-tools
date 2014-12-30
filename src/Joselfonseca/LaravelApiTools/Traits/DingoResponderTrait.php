@@ -19,7 +19,7 @@ trait DingoResponderTrait {
 
     // ----------------------------------------------------------------------
 
-    public function ResponseWithPaginator($model, $transformer) {
+    public function responseWithPaginator($model, $transformer) {
         $model = $this->parseSearchParams($model);
         $limit = \Input::get('limit', 0);
         if (empty($limit)) {
@@ -30,7 +30,7 @@ trait DingoResponderTrait {
 
     // ----------------------------------------------------------------------
 
-    public function ResponseWithCollection($model, $transformer) {
+    public function responseWithCollection($model, $transformer) {
         if ($model instanceof \Eloquent) {
             return $this->RespondEloquentCollection($model, $transformer);
         }
@@ -39,7 +39,7 @@ trait DingoResponderTrait {
 
     // ----------------------------------------------------------------------
 
-    public function ResponseWithItem($idSlug, $model, $transformer) {
+    public function responseWithItem($idSlug, $model, $transformer) {
         if (is_numeric($idSlug)) {
             $model = $model->where('id',$idSlug);
         } elseif (is_string($idSlug)) {
@@ -50,9 +50,9 @@ trait DingoResponderTrait {
             return $this->errorNotFound();
         }
         if($model instanceof \Eloquent){
-            return $this->RespondEloquentItem($model, $transformer);
+            return $this->respondEloquentItem($model, $transformer);
         }
-        return $this->RespondDbItem($model, $transformer);
+        return $this->respondDbItem($model, $transformer);
     }
 
     // ----------------------------------------------------------------------
@@ -95,7 +95,7 @@ trait DingoResponderTrait {
     
     // ----------------------------------------------------------------------
 
-    protected function RespondEloquentCollection($model, $transformer) {
+    protected function respondEloquentCollection($model, $transformer) {
         $model = $model->get();
         if ($model->isEmpty()) {
             return $this->response->noContent();
@@ -105,7 +105,7 @@ trait DingoResponderTrait {
     
     // ----------------------------------------------------------------------
     
-    protected function RespondDbArrayCollection($model, $transformer){
+    protected function respondDbArrayCollection($model, $transformer){
         if ($model->count() === 0) {
             return $this->response->noContent();
         }
@@ -116,13 +116,13 @@ trait DingoResponderTrait {
     
     // ----------------------------------------------------------------------
     
-    protected function RespondEloquentItem($model, $transformer){
+    protected function respondEloquentItem($model, $transformer){
         return $this->response->item($model, $transformer);
     }
     
     // ----------------------------------------------------------------------
     
-    protected function RespondDbItem($model, $transformer){
+    protected function respondDbItem($model, $transformer){
         $item = new \League\Fractal\Resource\Item($model, $transformer);
         $manager = new \League\Fractal\Manager;
         return $this->response->array($manager->createData($item)->toArray());

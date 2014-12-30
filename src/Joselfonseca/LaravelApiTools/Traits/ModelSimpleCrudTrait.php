@@ -19,7 +19,7 @@ trait ModelSimpleCrudTrait {
      * @param array $input
      * @return type
      */
-    public function CreateResource($input) {
+    public function createResource($input) {
         try {
             $this->validate($input);
             $model = $this->create($input);
