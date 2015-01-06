@@ -68,7 +68,7 @@ trait DingoResponderTrait {
                 $modelReturn = $this->parseParam($searchExplodeItem, $modelReturn);
             }
         }
-        $modelReturn = $this->ParseSorting($modelReturn);
+        $modelReturn = $this->parseSorting($modelReturn);
         return $modelReturn;
     }
 
@@ -135,7 +135,7 @@ trait DingoResponderTrait {
      * @param $modelReturn
      * @return mixed
      */
-    protected function ParseSorting($modelReturn){
+    protected function parseSorting($modelReturn){
         if (\Input::has('orderBy')) {
             $this->orderBy = \Input::get('orderBy');
         }
