@@ -16,6 +16,8 @@ trait DingoResponderTrait {
     protected $searchSecondDelimiter = '|';
     protected $searchDefaultCondition = '=';
     protected $whereTypeDefault = 'AND';
+    protected $orderBy = "created_at";
+    protected $sort = "DESC";
 
     // ----------------------------------------------------------------------
 
@@ -66,6 +68,7 @@ trait DingoResponderTrait {
                 $modelReturn = $this->parseParam($searchExplodeItem, $modelReturn);
             }
         }
+        $modelReturn = $this->ParseSorting($modelReturn);
         return $modelReturn;
     }
 
@@ -126,6 +129,21 @@ trait DingoResponderTrait {
         $item = new \League\Fractal\Resource\Item($model, $transformer);
         $manager = new \League\Fractal\Manager;
         return $this->response->array($manager->createData($item)->toArray());
+    }
+
+    /**
+     * @param $modelReturn
+     * @return mixed
+     */
+    protected function ParseSorting($modelReturn){
+        if (\Input::has('orderBy')) {
+            $this->orderBy = \Input::get('orderBy');
+        }
+        if (\Input::has('sort')) {
+            $this->sort = \Input::get('sort');
+        }
+        $modelReturn = $modelReturn->orderBy($this->orderBy, $this->sort);
+        return $modelReturn;
     }
 
 }

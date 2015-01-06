@@ -20,16 +20,7 @@ trait ModelSimpleCrudTrait {
      * @return type
      */
     public function createResource($input) {
-        try {
-            $this->validate($input);
-            $model = $this->create($input);
-        } catch (ValidationException $e) {
-            if (\Config::get('laravel-api-tools::responder') === "dingo") {
-                throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
-            }
-            throw new ValidationExceptionUseSimpleResponder($e->validator);
-        }
-        return $model;
+        return $this->create($input);;
     }
 
     /**
@@ -54,24 +45,11 @@ trait ModelSimpleCrudTrait {
      * @throws \Dingo\Api\Exception\StoreResourceFailedException
      */
     public function updateResource($id, $input) {
-        try {
-            $this->validate($input);
-            $model = $this->findOrFail($id);
-            foreach ($input as $key => $value){
-                $model->{$key} = $value;
-            }
-            $model->save();
-        } catch (ValidationException $e) {
-            if (\Config::get('laravel-api-tools::responder') === "dingo") {
-                throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
-            }
-            throw new ValidationExceptionUseSimpleResponder($e->validator);
-        } catch(ModelNotFoundException $e){
-            if (\Config::get('laravel-api-tools::responder') === "dingo") {
-                throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
-            }
-            throw new ModelNotFoundExceptionUseSimpleResponder($e->validator);
+        $model = $this->findOrFail($id);
+        foreach ($input as $key => $value){
+            $model->{$key} = $value;
         }
+        $model->save();
         return $model;
     }
     /**
@@ -90,6 +68,56 @@ trait ModelSimpleCrudTrait {
             throw new ModelNotFoundExceptionUseSimpleResponder();
         }
         return true;
+    }
+
+
+    /**
+     * Register some events
+     */
+    public static function boot(){
+        parent::boot();
+        static::creating(function ($model) {
+            $model->validateCreateFromEvent($model);
+        });
+        static::updating(function ($model) {
+            $model->validateUpdateFromEvent($model);
+        });
+    }
+
+    /**
+     * @param $model
+     * @throws ModelNotFoundExceptionUseSimpleResponder
+     * @throws ValidationExceptionUseSimpleResponder
+     */
+    private function validateUpdateFromEvent($model){
+        try {
+            $model->validate($model->toArray());
+        } catch (ValidationException $e) {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
+                throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
+            }
+            throw new ValidationExceptionUseSimpleResponder($e->validator);
+        } catch(ModelNotFoundException $e){
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
+                throw new \Dingo\Api\Exception\ResourceException(\Config::get('laravel-api-tools::ResourceNotFound'));
+            }
+            throw new ModelNotFoundExceptionUseSimpleResponder($e->validator);
+        }
+    }
+
+    /**
+     * @param $model
+     * @throws ValidationExceptionUseSimpleResponder
+     */
+    private function validateCreateFromEvent($model){
+        try {
+            $model->validate($model->toArray());
+        } catch (ValidationException $e) {
+            if (\Config::get('laravel-api-tools::responder') === "dingo") {
+                throw new \Dingo\Api\Exception\StoreResourceFailedException(\Config::get('laravel-api-tools::ValidationCreationErrorMessage'), $e->validator->errors());
+            }
+            throw new ValidationExceptionUseSimpleResponder($e->validator);
+        }
     }
 
 }
