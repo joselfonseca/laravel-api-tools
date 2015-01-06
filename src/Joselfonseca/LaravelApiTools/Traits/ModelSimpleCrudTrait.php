@@ -46,9 +46,7 @@ trait ModelSimpleCrudTrait {
      */
     public function updateResource($id, $input) {
         $model = $this->findOrFail($id);
-        foreach ($input as $key => $value){
-            $model->{$key} = $value;
-        }
+        $model->fill($input);
         $model->save();
         return $model;
     }
