@@ -68,7 +68,6 @@ trait ModelSimpleCrudTrait {
         return true;
     }
 
-
     /**
      * Register some events
      */
