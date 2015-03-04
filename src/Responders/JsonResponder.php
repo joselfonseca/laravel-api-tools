@@ -5,7 +5,7 @@ namespace Joselfonseca\LaravelApiTools\Responders;
 
 use Joselfonseca\LaravelApiTools\Interfaces\ResponderInterface;
 use \League\Fractal\Manager;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
 
 /**
  * Default implementation of the Responder interfase
@@ -37,7 +37,7 @@ class JsonResponder implements ResponderInterface{
      * @return Illuminate\Support\Facades\Response
      */
     public function simpleJson($data = [], $responseCode = 200){
-        $this->response = $this->laravelResponse->make(json_encode($data), $responseCode);
+        $this->response = $this->laravelResponse->setContent(json_encode($data))->setStatusCode($responseCode);
         return $this->respond();
     }
     /**
@@ -47,7 +47,7 @@ class JsonResponder implements ResponderInterface{
      * @return Illuminate\Support\Facades\Response
      */
     public function appError($errorCode = "Exception", $errorDescription = "The app encounter an error not defined") {
-        $this->response = $this->laravelResponse->make(json_encode(['ErrorCode' => $errorCode, 'ErrorDescription' => $errorDescription]), 500);
+        $this->response = $this->laravelResponse->setContent(json_encode(['ErrorCode' => $errorCode, 'ErrorDescription' => $errorDescription]))->setStatusCode(500);
         return $this->respond();
     }
     /**
@@ -60,7 +60,7 @@ class JsonResponder implements ResponderInterface{
         $manager = $this->manager->parseIncludes($includes);
         $data = $manager->createData($item)->toArray();
         $finalData = array_merge($extraData, $data);
-        $this->response = $this->laravelResponse->make(json_encode($finalData), 200);
+        $this->response = $this->laravelResponse->setContent(json_encode($finalData))->setStatusCode(200);
         return $this->respond();
     }
     /**
@@ -69,7 +69,7 @@ class JsonResponder implements ResponderInterface{
      * @return Illuminate\Support\Facades\Response
      */
     public function resourceNotFound($message = "We could not find what you were looking for") {
-        $this->response = $this->laravelResponse->make(json_encode(['message' => $message]), 404);
+        $this->response = $this->laravelResponse->setContent(json_encode(['message' => $message]))->setStatusCode(404);
         return $this->respond();
     }
     /**
@@ -79,7 +79,7 @@ class JsonResponder implements ResponderInterface{
      */
     public function validationError($validator) {
         $messages = $validator->messages();
-        $this->response = $this->laravelResponse->make(json_encode(['ErrorCode' => 'ValidationFail', 'ErrorDescription' => 'The input validation failed', 'errors' => $messages->all()]), 400);
+        $this->response = $this->laravelResponse->setContent(json_encode(['ErrorCode' => 'ValidationFail', 'ErrorDescription' => 'The input validation failed', 'errors' => $messages->all()]))->setStatusCode(400);
         return $this->respond();
     }
     /**
@@ -88,7 +88,7 @@ class JsonResponder implements ResponderInterface{
      * @return type
      */
     public function unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException"){
-        $this->response = $this->laravelResponse->make(json_encode(['message' => $message, 'ErrorCode' => $errorCode]), 404);
+        $this->response = $this->laravelResponse->setContent(json_encode(['message' => $message, 'ErrorCode' => $errorCode]))->setStatusCode(401);
         return $this->respond();
     }
 

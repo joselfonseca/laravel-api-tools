@@ -8,4 +8,4 @@ laravel-api-tools
 [![License](https://poser.pugx.org/joselfonseca/laravel-api-tools/license.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7862ca7d-551c-4311-82dd-7349eae4e9ee/big.png)](https://insight.sensiolabs.com/projects/7862ca7d-551c-4311-82dd-7349eae4e9ee)
 
-Some tools i use for my API Development in laravel. Nothing new, just some wrappers. 
+Laravel 5 version.

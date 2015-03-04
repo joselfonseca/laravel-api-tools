@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dingo/api": "0.8.*"
+        "league/fractal": "0.11.*"
     },
     "require-dev": {
         "orchestra/testbench": "2.2.*",
@@ -26,7 +26,7 @@
         "classmap": [
             
         ],
-        "psr-0": {
+        "psr-4": {
             "Joselfonseca\\LaravelApiTools\\": "src/"
         }
     },
