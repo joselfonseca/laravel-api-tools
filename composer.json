@@ -19,7 +19,7 @@
         "league/fractal": "0.11.*"
     },
     "require-dev": {
-        "orchestra/testbench": "2.2.*",
+        "orchestra/testbench": "3.0.*",
         "phpunit/phpunit": "4.2.0"
     },
     "autoload": {

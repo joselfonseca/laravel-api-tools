@@ -21,12 +21,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        /** Lets create an alias * */
-        AliasLoader::getInstance()->alias('ApiToolsResponder', 'Joselfonseca\LaravelApiTools\ApiToolsResponder');
-        /** Bind the default clases * */
-        $this->app->bind('JsonResponder', function() {
-            return new JsonResponder;
-        });
+        
     }
 
     /**
@@ -35,7 +30,12 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        //
+        /** Lets create an alias * */
+        AliasLoader::getInstance()->alias('ApiToolsResponder', 'Joselfonseca\LaravelApiTools\ApiToolsResponder');
+        /** Bind the default clases * */
+        $this->app->bind('JsonResponder', function() {
+            return new JsonResponder;
+        });
     }
 
     /**
