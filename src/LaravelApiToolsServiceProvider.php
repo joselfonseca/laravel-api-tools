@@ -15,6 +15,10 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      */
     protected $defer = false;
 
+    protected $providers = [
+        'Dingo\Api\Provider\LaravelServiceProvider'
+    ];
+
     /**
      * Bootstrap the application events.
      *
@@ -36,6 +40,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
         $this->app->bind('JsonResponder', function() {
             return new JsonResponder;
         });
+        $this->registerOtherProviders();
     }
 
     /**
@@ -45,6 +50,14 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      */
     public function provides() {
         return array();
+    }
+
+    private function registerOtherProviders()
+    {
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
+        return $this;
     }
 
 }
