@@ -16,7 +16,14 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     protected $providers = [
-        'Dingo\Api\Provider\LaravelServiceProvider'
+        'Dingo\Api\Provider\LaravelServiceProvider',
+        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
+    ];
+
+
+    protected $aliases   = [
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
     ];
 
     /**
@@ -40,7 +47,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
         $this->app->bind('JsonResponder', function() {
             return new JsonResponder;
         });
-        $this->registerOtherProviders();
+        $this->registerOtherProviders()->registerAliases();
     }
 
     /**
@@ -56,6 +63,14 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
     {
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
+        }
+        return $this;
+    }
+
+    private function registerAliases()
+    {
+        foreach ($this->aliases as $alias => $original) {
+            AliasLoader::getInstance()->alias($alias, $original);
         }
         return $this;
     }

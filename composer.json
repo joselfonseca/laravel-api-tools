@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dingo/api" : "0.9.*@dev"
+        "dingo/api" : "0.9.*@dev",
+        "tymon/jwt-auth": "0.5.*"
     },
     "require-dev": {
         "orchestra/testbench": "3.0.*",
