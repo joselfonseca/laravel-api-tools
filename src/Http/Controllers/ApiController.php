@@ -29,4 +29,9 @@ class ApiController extends Controller
     {
         return $this->response->collection($model->all(), $transformer);
     }
+
+    public function responseNoContent()
+    {
+        return $this->response->noContent();
+    }
 }
