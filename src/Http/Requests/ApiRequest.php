@@ -4,7 +4,7 @@ namespace Joselfonseca\LaravelApiTools\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Dingo\Api\Exception\StoreResourceFailedException;
+use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
 
 /**
  * Description of ApiRequest
@@ -22,7 +22,7 @@ class ApiRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new StoreResourceFailedException('Validation Error',$this->formatErrors($validator));
+        throw new ValidationException($validator);
     }
 
 }

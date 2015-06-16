@@ -6,21 +6,17 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Joselfonseca\LaravelApiTools\Responders\JsonResponder;
 
-class LaravelApiToolsServiceProvider extends ServiceProvider {
-
+class LaravelApiToolsServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
-    protected $defer = false;
-
+    protected $defer     = false;
     protected $providers = [
-        'Dingo\Api\Provider\LaravelServiceProvider',
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
     ];
-
-
     protected $aliases   = [
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
@@ -31,8 +27,18 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
-        
+    public function boot()
+    {
+        $this->app->singleton('Illuminate\Contracts\Debug\ExceptionHandler',
+            'Joselfonseca\LaravelApiTools\Exceptions\Handler');
+        $this->app->singleton('api.auth',
+            'Joselfonseca\LaravelApiTools\Auth\Auth');
+        $this->app['router']->middleware('api.protected',
+            'Joselfonseca\LaravelApiTools\Http\Middleware\ProtectedEndpoint');
+        $this->app['router']->middleware('api.cors',
+            'Joselfonseca\LaravelApiTools\Http\Middleware\Cors');
+        $this->app['router']->middleware('api.csfroff',
+            'Joselfonseca\LaravelApiTools\Http\Middleware\CsrfTokenOff');
     }
 
     /**
@@ -40,25 +46,25 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         /** Lets create an alias * */
-        AliasLoader::getInstance()->alias('ApiToolsResponder', 'Joselfonseca\LaravelApiTools\ApiToolsResponder');
+        AliasLoader::getInstance()->alias('ApiToolsResponder',
+            'Joselfonseca\LaravelApiTools\ApiToolsResponder');
         /** Bind the default clases * */
-        $this->app->bind('JsonResponder', function() {
+        $this->app->bind('JsonResponder',
+            function() {
             return new JsonResponder;
         });
-        $this->registerOtherProviders()->registerAliases();
+        $this->registerOtherProviders()
+            ->registerAliases()
+            ->publishConfiguration();
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * Register other providers
+     * @return \Joselfonseca\LaravelApiTools\LaravelApiToolsServiceProvider
      */
-    public function provides() {
-        return array();
-    }
-
     private function registerOtherProviders()
     {
         foreach ($this->providers as $provider) {
@@ -67,6 +73,10 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
         return $this;
     }
 
+    /**
+     * Register other aliases
+     * @return \Joselfonseca\LaravelApiTools\LaravelApiToolsServiceProvider
+     */
     private function registerAliases()
     {
         foreach ($this->aliases as $alias => $original) {
@@ -75,4 +85,11 @@ class LaravelApiToolsServiceProvider extends ServiceProvider {
         return $this;
     }
 
+    private function publishConfiguration()
+    {
+        $this->publishes([
+            __DIR__ . '/../../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
+        ], 'LAPIconfig');
+        return $this;
+    }
 }

@@ -72,5 +72,20 @@ class ApiToolsResponder {
         $responder = \App::make('JsonResponder');
         return $responder->unauthorized($message, $errorCode);
     }
-    
+    /**
+     * Respond with a no content
+     * @return Illuminate\Support\Facades\Response
+     */
+    public static function responseNoContent(){
+        $responder = \App::make('JsonResponder');
+        return $responder->responseNoContent();
+    }
+    /**
+     *
+     * @return Illuminate\Support\Facades\Response
+     */
+    public static function created(){
+        $responder = \App::make('JsonResponder');
+        return $responder->created();
+    }
 }

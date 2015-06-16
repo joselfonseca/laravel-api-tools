@@ -46,5 +46,10 @@ interface ResponderInterface {
      * @param type $message
      */
     public function unauthorized($message = "You dont have permissions for this resource", $errorCode = "AuthException");
+
+    /**
+     * Will respond with a status code 204 for no content
+     */
+    public function responseNoContent();
     
 }

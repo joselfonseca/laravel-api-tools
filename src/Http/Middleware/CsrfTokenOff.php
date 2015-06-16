@@ -1,6 +1,6 @@
 <?php
 
-namespace Joselfonseca\LaravelApiTools\Middleware;
+namespace Joselfonseca\LaravelApiTools\Http\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
