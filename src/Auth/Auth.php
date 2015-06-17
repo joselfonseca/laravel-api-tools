@@ -12,6 +12,7 @@ use Joselfonseca\LaravelApiTools\Exceptions\InvalidArgumentException;
 class Auth
 {
     private $provider;
+    private $user;
 
     public function __construct()
     {
@@ -25,10 +26,11 @@ class Auth
     public function authenticate()
     {
         $this->provider->authenticate();
+        $this->user = $this->provider->getAuthenticatedUser();
     }
 
     public function getAuthenticatedUser()
     {
-        return $this->provider->getAuthenticatedUser();
+        return $this->user;
     }
 }

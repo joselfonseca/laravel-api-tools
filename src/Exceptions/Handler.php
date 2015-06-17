@@ -8,6 +8,8 @@ use Joselfonseca\LaravelApiTools\ApiToolsResponder;
 use Exception;
 use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
 use Joselfonseca\LaravelApiTools\Exceptions\AuthorizationException;
+use Joselfonseca\LaravelApiTools\Exceptions\AclException;
+use Joselfonseca\LaravelApiTools\Exceptions\StoreResourceFailedException;
 
 /**
  * Description of Handler
@@ -47,6 +49,12 @@ class Handler extends IlluminateHandler
         }
         if($e instanceof AuthorizationException){
             return ApiToolsResponder::unauthorizedAccess($e->getMessage());
+        }
+        if($e instanceof AclException){
+            return ApiToolsResponder::unauthorizedAccess("ACL Exception - not enough permissions", 'ACLException');
+        }
+        if($e instanceof StoreResourceFailedException){
+            return ApiToolsResponder::simpleJson(['exception' => 'StoreResourceException', 'errors' => $e->getErrors()], 400);
         }
         return parent::render($request, $e);
     }
