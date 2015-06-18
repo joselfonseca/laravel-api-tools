@@ -88,7 +88,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
     private function publishConfiguration()
     {
         $this->publishes([
-            __DIR__ . '/../../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
+            __DIR__ . '/../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
         ], 'LAPIconfig');
         return $this;
     }
