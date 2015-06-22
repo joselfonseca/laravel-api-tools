@@ -59,6 +59,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
         $this->registerOtherProviders()
             ->registerAliases()
             ->publishConfiguration();
+        \Config::set('jwt.user', \Config::get('auth.model'));
     }
 
     /**

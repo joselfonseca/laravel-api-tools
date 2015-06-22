@@ -45,7 +45,7 @@ trait ResponderTrait
 
     public function errorUnauthorized($message = null)
     {
-        if (!empty($message)) {
+        if (empty($message)) {
             $message = "You dont have permissions for this resource";
         }
         return ApiToolsResponder::unauthorizedAccess($message);
