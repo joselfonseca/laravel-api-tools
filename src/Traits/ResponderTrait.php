@@ -34,7 +34,7 @@ trait ResponderTrait
                                            array $includes = [],
                                            array $extra = [])
     {
-        $collection = new Collection($model->all(), $transformer);
+        $collection = new Collection($model->get(), $transformer);
         return ApiToolsResponder::fractal($collection, $includes, $extra);
     }
 
