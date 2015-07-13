@@ -39,6 +39,9 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
             'Joselfonseca\LaravelApiTools\Http\Middleware\Cors');
         $this->app['router']->middleware('api.csfroff',
             'Joselfonseca\LaravelApiTools\Http\Middleware\CsrfTokenOff');
+        $this->publishes([
+            __DIR__ . '/../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
+        ], 'LAPIconfig');
     }
 
     /**
@@ -57,8 +60,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
             return new JsonResponder;
         });
         $this->registerOtherProviders()
-            ->registerAliases()
-            ->publishConfiguration();
+            ->registerAliases();
         \Config::set('jwt.user', \Config::get('auth.model'));
     }
 
@@ -86,11 +88,4 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function publishConfiguration()
-    {
-        $this->publishes([
-            __DIR__ . '/../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
-        ], 'LAPIconfig');
-        return $this;
-    }
 }
