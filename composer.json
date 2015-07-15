@@ -20,7 +20,6 @@
         "dingo/api" : "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "3.0.*",
         "phpunit/phpunit": "4.2.0"
     },
     "autoload": {
