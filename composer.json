@@ -17,7 +17,7 @@
     "require": {
         "php": ">=5.4.0",
         "tymon/jwt-auth": "0.5.*",
-        "dingo/api" : "dev-master"
+        "dingo/api" : "0.9-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "4.2.0"
