@@ -16,8 +16,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "league/fractal": "0.12.*",
-        "tymon/jwt-auth": "0.5.*"
+        "tymon/jwt-auth": "0.5.*",
+        "dingo/api" : "dev-master"
     },
     "require-dev": {
         "orchestra/testbench": "3.0.*",

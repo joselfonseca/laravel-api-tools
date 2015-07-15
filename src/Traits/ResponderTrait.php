@@ -2,73 +2,48 @@
 
 namespace Joselfonseca\LaravelApiTools\Traits;
 
-use Joselfonseca\LaravelApiTools\ApiToolsResponder;
-use League\Fractal\Resource\Item;
-use League\Fractal\Resource\Collection;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use Dingo\Api\Routing\Helpers;
 
 trait ResponderTrait
 {
 
-    public function responseWithPaginator($limit, $model, $transformer,
-                                          array $includes = [],
-                                          array $extra = [])
+    use Helpers;
+
+    public function responseWithPaginator($limit, $model, $transformer)
     {
-        $paginator = $model->paginate($limit);
-        $resource  = new Collection($paginator->getCollection(), $transformer);
-        $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
-        return ApiToolsResponder::fractal($resource, $includes, $extra);
+        return $this->response->paginator($model->paginate($limit), $transformer);
     }
 
-    public function responseWithitem($id, $model, $transformer,
-                                     array $includes = [], array $extra = [])
-    {
-        if (!is_null($id)) {
-            $model = $model->findOrFail($id);
-        }
-        $item = new Item($model, $transformer);
-        return ApiToolsResponder::fractal($item, $includes, $extra);
+    public function responseWithItem($model, $transformer) {
+        return $this->response->item($model, $transformer);
     }
 
-    public function responseWithCollection($model, $transformer,
-                                           array $includes = [],
-                                           array $extra = [])
-    {
-        $collection = new Collection($model->get(), $transformer);
-        return ApiToolsResponder::fractal($collection, $includes, $extra);
+    public function responseWithCollection($model, $transformer) {
+        return $this->response->collection($model->get(), $transformer);
     }
 
     public function responseNoContent()
     {
-        return ApiToolsResponder::responseNoContent();
+        return $this->response->noContent();
     }
 
     public function errorUnauthorized($message = null)
     {
-        if (empty($message)) {
-            $message = "You dont have permissions for this resource";
-        }
-        return ApiToolsResponder::unauthorizedAccess($message);
+        return $this->response->errorForbidden($message);
     }
 
-    public function errorInternal($errorCode = null, $message = null)
+    public function errorInternal($message = null)
     {
-        if (!empty($message)) {
-            $message = "You dont have permissions for this resource";
-        }
-        if (!empty($errorCode)) {
-            $errorCode = "Exception";
-        }
-        return ApiToolsResponder::appError($errorCode, $message);
+        return $this->response->errorInternal($message);
     }
 
     public function simpleArray(array $array = [])
     {
-        return ApiToolsResponder::simpleJson($array);
+        return $this->response->array($array);
     }
 
-    public function respondCreated()
+    public function respondCreated($location = null)
     {
-        return ApiToolsResponder::created();
+        return $this->response->created($location);
     }
 }

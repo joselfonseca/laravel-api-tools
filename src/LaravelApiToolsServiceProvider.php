@@ -15,6 +15,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     protected $defer     = false;
     protected $providers = [
+        'Dingo\Api\Provider\LaravelServiceProvider',
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
     ];
     protected $aliases   = [
@@ -29,12 +30,6 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton('Illuminate\Contracts\Debug\ExceptionHandler',
-            'Joselfonseca\LaravelApiTools\Exceptions\Handler');
-        $this->app->singleton('api.auth',
-            'Joselfonseca\LaravelApiTools\Auth\Auth');
-        $this->app['router']->middleware('api.protected',
-            'Joselfonseca\LaravelApiTools\Http\Middleware\ProtectedEndpoint');
         $this->app['router']->middleware('api.cors',
             'Joselfonseca\LaravelApiTools\Http\Middleware\Cors');
         $this->app['router']->middleware('api.csfroff',
@@ -42,6 +37,11 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
         ], 'LAPIconfig');
+        config([
+            'api.auth.jwt' => function ($app) {
+                return new \Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
+            }
+        ]);
     }
 
     /**
