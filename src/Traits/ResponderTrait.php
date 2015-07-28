@@ -9,9 +9,13 @@ trait ResponderTrait
 
     use Helpers;
 
-    public function responseWithPaginator($limit, $model, $transformer)
+    public function responseWithPaginator($limit, $model, $transformer, $urlPath = null)
     {
-        return $this->response->paginator($model->paginate($limit), $transformer);
+        $paginator = $model->paginate($limit);
+        if(!empty($urlPath)){
+            $paginator->setPath($urlPath);
+        }
+        return $this->response->paginator($paginator, $transformer);
     }
 
     public function responseWithItem($model, $transformer) {
