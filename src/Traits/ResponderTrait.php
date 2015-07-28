@@ -9,11 +9,14 @@ trait ResponderTrait
 
     use Helpers;
 
-    public function responseWithPaginator($limit, $model, $transformer, $urlPath = null)
+    public function responseWithPaginator($limit, $model, $transformer, $urlPath = null, array $append = null)
     {
         $paginator = $model->paginate($limit);
         if(!empty($urlPath)){
             $paginator->setPath($urlPath);
+        }
+        if(!empty($append) && is_array($append)){
+            $paginator->appends($append);
         }
         return $this->response->paginator($paginator, $transformer);
     }
