@@ -51,14 +51,6 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /** Lets create an alias * */
-        AliasLoader::getInstance()->alias('ApiToolsResponder',
-            'Joselfonseca\LaravelApiTools\ApiToolsResponder');
-        /** Bind the default clases * */
-        $this->app->bind('JsonResponder',
-            function() {
-            return new JsonResponder;
-        });
         $this->registerOtherProviders()
             ->registerAliases();
         \Config::set('jwt.user', \Config::get('auth.model'));
