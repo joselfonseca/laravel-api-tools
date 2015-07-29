@@ -1,19 +1,17 @@
 <?php
 
+namespace Joselfonseca\LaravelApiTools\Tests;
 
-class TestExceptions extends Orchestra\Testbench\TestCase{
+use \Mockery as m;
 
-    protected function getPackageProviders($app)
-    {
-        return ['Joselfonseca\LaravelApiTools\LaravelApiToolsServiceProvider'];
-    }
+class TestExceptions extends Boot{
 
     /**
      * @expectedException     Joselfonseca\LaravelApiTools\Exceptions\AclException
      */
     public function testAclException()
     {
-        throw new Joselfonseca\LaravelApiTools\Exceptions\AclException();
+        throw new \Joselfonseca\LaravelApiTools\Exceptions\AclException();
     }
 
     /**
@@ -21,7 +19,40 @@ class TestExceptions extends Orchestra\Testbench\TestCase{
      */
     public function testApiModelNotFoundException()
     {
-        throw new Joselfonseca\LaravelApiTools\Exceptions\ApiModelNotFoundException();
+        throw new \Joselfonseca\LaravelApiTools\Exceptions\ApiModelNotFoundException();
+    }
+
+    /**
+     * @expectedException     Joselfonseca\LaravelApiTools\Exceptions\AuthorizationException
+     */
+    public function testAuthorizationException()
+    {
+        throw new \Joselfonseca\LaravelApiTools\Exceptions\AuthorizationException();
+    }
+
+    /**
+     * @expectedException     Joselfonseca\LaravelApiTools\Exceptions\InvalidArgumentException
+     */
+    public function testInvalidArgumentException()
+    {
+        throw new \Joselfonseca\LaravelApiTools\Exceptions\InvalidArgumentException();
+    }
+
+    /**
+     * @expectedException     Joselfonseca\LaravelApiTools\Exceptions\ValidationException
+     */
+    public function testValidationException()
+    {
+        $validator = m::mock('validator')->shouldReceive('errors')->andReturn([])->mock();
+        throw new \Joselfonseca\LaravelApiTools\Exceptions\ValidationException($validator);
+    }
+
+    /**
+     * Mockery
+     */
+    public function tearDown()
+    {
+        m::close();
     }
 
 }
