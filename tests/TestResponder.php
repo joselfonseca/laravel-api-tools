@@ -62,4 +62,22 @@ class TestResponder extends Boot{
         $this->assertEquals(204, $this->traitObject->responseNoContent()->getStatusCode());
     }
 
+    /**
+     * It throws an exception for the dingo responder
+     * @expectedException     Symfony\Component\HttpKernel\Exception\HttpException
+     */
+    public function testWithError()
+    {
+        $this->traitObject->errorInternal();
+    }
+
+    /**
+     * It throws an exception for the dingo responder
+     * @expectedException     Symfony\Component\HttpKernel\Exception\HttpException
+     */
+    public function testErrorUnauthorized()
+    {
+        $this->traitObject->errorUnauthorized();
+    }
+
 }
