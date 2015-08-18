@@ -1,6 +1,12 @@
 site_name: Laravel Api Tools
 pages:
 - index.md
+- installation.md
+- routes.md
+- transformers.md
+- authentication.md
+- requests.md
+- responder.md
 - license.md
 - changelog.md
 theme: readthedocs

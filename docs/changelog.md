@@ -1,3 +1,3 @@
 # Changelog
 
-All Notable changes to `laravel-admin` will be documented in this file
+All Notable changes to `laravel-api-tools` will be documented in this file

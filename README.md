@@ -7,6 +7,5 @@ laravel-api-tools
 [![Latest Unstable Version](https://poser.pugx.org/joselfonseca/laravel-api-tools/v/unstable.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools) 
 [![License](https://poser.pugx.org/joselfonseca/laravel-api-tools/license.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools)
 
-Laravel 5 version.
 
-For the documentation please visit [(https://joselfonseca.atlassian.net/wiki/display/LAT/Laravel+API+Tools)](https://joselfonseca.atlassian.net/wiki/display/LAT/Laravel+API+Tools)
+For the documentation please visit [http://joselfonseca.github.io/laravel-api-tools](http://joselfonseca.github.io/laravel-api-tools)
