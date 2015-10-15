@@ -12,7 +12,6 @@ class Boot extends \Orchestra\Testbench\TestCase{
      */
     protected function getEnvironmentSetUp($app)
     {
-        // Setup default database to use sqlite :memory:
         $app['config']->set('jwt.user', 'Joselfonseca\LaravelApiTools\Tests\Stubs\UserModel');
     }
 
