@@ -37,11 +37,9 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/laravel-api-tools.php' => config_path('laravel-api-tools.php'),
         ], 'LAPIconfig');
-        config([
-            'api.auth.jwt' => function ($app) {
-                return new \Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
-            }
-        ]);
+        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
+            return new \Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
+        });
     }
 
     /**
