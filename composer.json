@@ -28,5 +28,9 @@
         "Joselfonseca\\LaravelApiTools\\Tests\\": "tests/"
       }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist"
+    }
 }
