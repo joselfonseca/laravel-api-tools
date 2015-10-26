@@ -3,6 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Traits;
 
 use Dingo\Api\Routing\Helpers;
+use Closure;
 
 /**
  * Trait ResponderTrait
