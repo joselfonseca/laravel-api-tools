@@ -21,7 +21,7 @@ trait ResponderTrait
      * @param array $append
      * @return mixed
      */
-    public function responseWithPaginator($limit, $model, $transformer, $urlPath = null, array $append = null)
+    public function responseWithPaginator($limit, $model, $transformer, $urlPath = null, array $append = null, array $parameters = [], Closure $after = null)
     {
         $paginator = $model->paginate($limit);
         if(!empty($urlPath)){
@@ -30,7 +30,7 @@ trait ResponderTrait
         if(!empty($append) && is_array($append)){
             $paginator->appends($append);
         }
-        return $this->response->paginator($paginator, $transformer);
+        return $this->response->paginator($paginator, $transformer, $parameters, $after);
     }
 
     /**
@@ -38,8 +38,8 @@ trait ResponderTrait
      * @param $transformer
      * @return mixed
      */
-    public function responseWithItem($model, $transformer) {
-        return $this->response->item($model, $transformer);
+    public function responseWithItem($model, $transformer, array $parameters = [], Closure $after = null) {
+        return $this->response->item($model, $transformer, $parameters, $after);
     }
 
     /**
@@ -47,8 +47,8 @@ trait ResponderTrait
      * @param $transformer
      * @return mixed
      */
-    public function responseWithCollection($model, $transformer) {
-        return $this->response->collection($model->get(), $transformer);
+    public function responseWithCollection($model, $transformer, array $parameters = [], Closure $after = null) {
+        return $this->response->collection($model->get(), $transformer,  $parameters, $after);
     }
 
     /**
