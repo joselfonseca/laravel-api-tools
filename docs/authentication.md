@@ -17,7 +17,7 @@ Since this functionality is inherited from Dingo API, you can use Basic, JWT or 
 The default providers are Basic and JWT. here is an example of a resource protected by JWT
 
 ```php
-	$api->group(['protected' => true, 'providers' => ['jwt']], function($api) {
+	$api->group(['middleware' => ['api.auth'], 'providers' => ['jwt']], function($api) {
 	    $api->resource('/users', 'Users\UserController');
 	});
 ```
