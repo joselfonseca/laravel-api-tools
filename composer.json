@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.5.9",
         "tymon/jwt-auth": "0.5.*",
-        "dingo/api" : "1.0.*@dev"
+        "dingo/api" : "1.0.*@dev",
+        "lucadegasperi/oauth2-server-laravel": "5.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
