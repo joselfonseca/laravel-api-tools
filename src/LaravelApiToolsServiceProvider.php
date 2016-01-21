@@ -4,7 +4,6 @@ namespace Joselfonseca\LaravelApiTools;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Joselfonseca\LaravelApiTools\Responders\JsonResponder;
 
 class LaravelApiToolsServiceProvider extends ServiceProvider
 {
@@ -15,8 +14,9 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     protected $defer     = false;
     protected $providers = [
-        'Dingo\Api\Provider\LaravelServiceProvider',
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
+        DingoApiServiceProvider::class,
+        \Dingo\Api\Provider\LaravelServiceProvider::class,
+        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
     ];
     protected $aliases   = [
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
