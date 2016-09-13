@@ -2,9 +2,17 @@
 
 namespace Joselfonseca\LaravelApiTools;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use League\OAuth2\Server\Exception\OAuthException;
+use Joselfonseca\LaravelApiTools\Exceptions\OAuthExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Joselfonseca\LaravelApiTools\Exceptions\UnauthorizedExceptionHandler;
 
+/**
+ * Class LaravelApiToolsServiceProvider
+ * @package Joselfonseca\LaravelApiTools
+ */
 class LaravelApiToolsServiceProvider extends ServiceProvider
 {
     /**
@@ -12,14 +20,15 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer     = false;
     protected $providers = [
-        DingoApiServiceProvider::class,
         \Dingo\Api\Provider\LaravelServiceProvider::class,
         \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         \LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
     ];
+    /**
+     * @var array
+     */
     protected $aliases   = [
         'JWTAuth' => \Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class,
@@ -43,6 +52,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
         app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
             return new \Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
         });
+        $this->registerErrorHandlers();
     }
 
     /**
@@ -79,6 +89,20 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
             AliasLoader::getInstance()->alias($alias, $original);
         }
         return $this;
+    }
+
+    /**
+     *
+     */
+    protected function registerErrorHandlers()
+    {
+        $handler = $this->app->make('api.exception');
+        $handler->register(function(OAuthException $exception){
+            return app(OAuthExceptionHandler::class)->handle($exception);
+        });
+        $handler->register(function(UnauthorizedHttpException $exception){
+            return app(UnauthorizedExceptionHandler::class)->handle($exception);
+        });
     }
 
 }
