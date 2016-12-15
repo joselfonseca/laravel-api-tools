@@ -2,17 +2,29 @@
 
 namespace Joselfonseca\LaravelApiTools\Exceptions;
 
-use Dingo\Api\Exception\ResourceException;
+use RuntimeException;
 
 /**
- * When validation fails.
- *
- * @author Jose Luis Fonseca
+ * Class ValidationException
+ * @package Joselfonseca\LaravelApiTools\Exceptions
  */
-class ValidationException extends ResourceException{
-    
-    public function __construct($validator) {
-        parent::__construct('Validation Fail', $validator->errors(), null, [], 0);
+class ValidationException extends RuntimeException
+{
+
+
+    /**
+     * @var \Illuminate\Support\Collection|array
+     */
+    protected $messages;
+
+
+    /**
+     * ValidationException constructor.
+     * @param string $messages
+     */
+    public function __construct($messages)
+    {
+        $this->messages = is_array($messages) ? collect($messages) : $messages;
     }
 
 }

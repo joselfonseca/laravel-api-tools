@@ -4,11 +4,20 @@ namespace Joselfonseca\LaravelApiTools\Tests\Stubs;
 
 use League\Fractal\TransformerAbstract;
 
-class TransformerStub extends TransformerAbstract{
+/**
+ * Class TransformerStub
+ * @package Joselfonseca\LaravelApiTools\Tests\Stubs
+ */
+class TransformerStub extends TransformerAbstract
+{
 
-    public function transform($array = ['foo' => 'bar'])
+    /**
+     * @param ModelStub $model
+     * @return array
+     */
+    public function transform(ModelStub $model)
     {
-        return $array;
+        return $model->toArray();
     }
 
 }
