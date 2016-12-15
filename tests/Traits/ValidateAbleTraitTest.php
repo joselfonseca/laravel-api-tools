@@ -3,7 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Tests\Traits;
 
 use Joselfonseca\LaravelApiTools\Tests\TestCase;
-use Joselfonseca\LaravelApiTools\Tests\Stubs\ServiceStub;
+use Joselfonseca\LaravelApiTools\Tests\Fakes\ServiceFake;
 
 /**
  * Class ValidateAbleTraitTest
@@ -17,7 +17,7 @@ class ValidateAbleTraitTest extends TestCase
      */
     public function it_throws_validation_exception_on_invalid_input()
     {
-        $service = new ServiceStub();
+        $service = new ServiceFake();
         $service->create([]);
     }
 
@@ -26,7 +26,7 @@ class ValidateAbleTraitTest extends TestCase
      */
     public function it_passes_validation_on_valid_input()
     {
-        $service = new ServiceStub();
+        $service = new ServiceFake();
         $service->create(['name' => 'Jose Fonseca']);
         $this->assertTrue(true);
     }

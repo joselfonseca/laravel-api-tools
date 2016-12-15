@@ -1,6 +1,6 @@
 <?php
 
-namespace Joselfonseca\LaravelApiTools\Tests\Stubs;
+namespace Joselfonseca\LaravelApiTools\Tests\Fakes;
 
 use Joselfonseca\LaravelApiTools\Contracts\FractalAble;
 use Joselfonseca\LaravelApiTools\Contracts\ValidateAble;
@@ -11,7 +11,7 @@ use Joselfonseca\LaravelApiTools\Traits\ValidateAbleTrait;
  * Class ServiceStub
  * @package Joselfonseca\LaravelApiTools\Tests\Stubs
  */
-class ServiceStub implements FractalAble, ValidateAble
+class ServiceFake implements FractalAble, ValidateAble
 {
 
     use FractalAbleTrait, ValidateAbleTrait;
@@ -22,11 +22,11 @@ class ServiceStub implements FractalAble, ValidateAble
     protected $resourceKey = 'people';
 
     /**
-     * @return TransformerStub|mixed
+     * @return TransformerFake|mixed
      */
     public function setTransformer()
     {
-        return app(TransformerStub::class);
+        return app(TransformerFake::class);
     }
 
     /**

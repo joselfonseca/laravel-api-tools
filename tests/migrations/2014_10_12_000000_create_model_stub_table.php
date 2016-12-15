@@ -13,7 +13,7 @@ class CreateModelStubTable extends Migration
      */
     public function up()
     {
-        Schema::create('model_stubs', function (Blueprint $table) {
+        Schema::create('model_fakes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uuid');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateModelStubTable extends Migration
      */
     public function down()
     {
-        Schema::drop('model_stubs');
+        Schema::drop('model_fakes');
     }
 }
