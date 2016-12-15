@@ -7,6 +7,10 @@ laravel-api-tools
 [![Latest Unstable Version](https://poser.pugx.org/joselfonseca/laravel-api-tools/v/unstable.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools) 
 [![License](https://poser.pugx.org/joselfonseca/laravel-api-tools/license.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools)
 
+## Versions
+
+Please note this is the 2.0 version which is a complete re write, if you are looking for the previous version with Dingo, check the 1.4 branch
+
 ## Installation
 
 To install this update your composer.json file to require
@@ -27,7 +31,7 @@ You are done with the installation!
 
 ## Documentation
 
-For documentation on this package, please visit the [https://github.com/joselfonseca/laravel-api-tools/wiki](wiki).
+For documentation on this package, please visit the [wiki](https://github.com/joselfonseca/laravel-api-tools/wiki).
 
 ## Change log
 
