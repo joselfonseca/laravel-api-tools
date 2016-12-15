@@ -3,6 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Tests\Stubs;
 
 use Illuminate\Database\Eloquent\Model;
+use Joselfonseca\LaravelApiTools\Traits\UuidScopeTrait;
 
 /**
  * Class ModelStub
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ModelStub extends Model
 {
+
+    use UuidScopeTrait;
 
     /**
      * @var array
