@@ -4,7 +4,7 @@ namespace App\Http\Controllers\StResourceKey;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Contracts\StResourceKey\Contract;
+use App\Contracts\StResourceKey\DummyContract;
 
 /**
  * Class StResourceKeyController
@@ -32,8 +32,8 @@ class StResourceKeyController extends Controller
      */
     public function index()
     {
-        $ResourceKey = $this->service->get();
-        return $this->service->transform($ResourceKey);
+        $model = $this->service->get();
+        return $this->service->transform($model);
     }
 
     /**
@@ -54,8 +54,8 @@ class StResourceKeyController extends Controller
      */
     public function update(Request $request, $uuid)
     {
-        $ResourceKey = $this->service->update($uuid, $request->all());
-        return response()->json($this->service->transform($ResourceKey));
+        $model = $this->service->update($uuid, $request->all());
+        return response()->json($this->service->transform($model));
     }
 
     /**
