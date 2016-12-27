@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Entities\StResourceKey\DummyModel;
+use League\Fractal\TransformerAbstract;
 use App\Transformers\StResourceKey\DummyTransformer;
 use App\Contracts\StResourceKey\DummyContract;
-use League\Fractal\TransformerAbstract;
 use Joselfonseca\LaravelApiTools\Contracts\FractalAble;
 use Joselfonseca\LaravelApiTools\Contracts\ValidateAble;
 use Joselfonseca\LaravelApiTools\Traits\FractalAbleTrait;
@@ -25,14 +25,14 @@ class DummyClass implements FractalAble, ValidateAble, DummyContract
      * @var array
      */
     protected $validationCreateRules = [
-        DummyValidationCreateRules
+
     ];
 
     /**
      * @var array
      */
     protected $validationUpdateRules = [
-        DummyValidationUpdateRules
+
     ];
 
     /**

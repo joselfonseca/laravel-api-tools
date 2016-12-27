@@ -98,7 +98,7 @@ class GenerateEntities extends Command
         if(!is_dir(app_path('Transformers/'.$namespace))){
             mkdir(app_path('Transformers/'.$namespace));
         }
-        $transformerName = studly_case($resource['resource_key']).'Transformer';
+        $transformerName = studly_case($resource['singular_key']).'Transformer';
         $transformerStub = $this->files->get(__DIR__ . '/../../stubs/transformer.stub');
         $transformerStub = str_replace('DummyClass', $transformerName, $transformerStub);
         $transformerStub = str_replace('DummyModel', studly_case($resource['singular_key']), $transformerStub);
