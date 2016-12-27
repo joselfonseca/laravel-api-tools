@@ -29,7 +29,7 @@ class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-
+            'Uuid' => \Webpatser\Uuid\Uuid::class,
         ];
     }
 

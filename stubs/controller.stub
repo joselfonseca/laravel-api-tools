@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers\StResourceKey;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Contracts\StResourceKey\Contract;
+
+/**
+ * Class StResourceKeyController
+ * @package App\Http\Controllers\StResourceKey
+ */
+class StResourceKeyController extends Controller
+{
+
+    /**
+     * @var Contract
+     */
+    protected $service;
+
+    /**
+     * StResourceKeyController constructor.
+     * @param Contract $service
+     */
+    public function __construct(Contract $service)
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function index()
+    {
+        $ResourceKey = $this->service->get();
+        return $this->service->transform($ResourceKey);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function store(Request $request)
+    {
+        $attributes = $request->all();
+        $this->service->create($attributes);
+        return response()->json()->setStatusCode(201);
+    }
+
+    /**
+     * @param Request $request
+     * @param $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $uuid)
+    {
+        $ResourceKey = $this->service->update($uuid, $request->all());
+        return response()->json($this->service->transform($ResourceKey));
+    }
+
+    /**
+     * @param Request $request
+     * @param $uuid
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function destroy(Request $request, $uuid)
+    {
+        $this->service->delete($uuid);
+        return response()->json()->setStatusCode(204);
+    }
+}

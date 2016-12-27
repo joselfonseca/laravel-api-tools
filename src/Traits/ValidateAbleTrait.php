@@ -2,8 +2,8 @@
 
 namespace Joselfonseca\LaravelApiTools\Traits;
 
-use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
 use Illuminate\Contracts\Validation\Factory as Validator;
+use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
 
 /**
  * Class ValidateAbleTrait

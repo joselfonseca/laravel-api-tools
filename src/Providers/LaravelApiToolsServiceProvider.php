@@ -4,6 +4,7 @@ namespace Joselfonseca\LaravelApiTools\Providers;
 
 use App\Exceptions\Handler;
 use Illuminate\Support\ServiceProvider;
+use Joselfonseca\LaravelApiTools\Console\GenerateEntities;
 
 /**
  * Class LaravelApiToolsServiceProvider
@@ -18,7 +19,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $this->commands(GenerateEntities::class);
     }
 
 

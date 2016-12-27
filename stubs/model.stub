@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Entities\StResourceKey;
+
+use Illuminate\Database\Eloquent\Model;
+use Joselfonseca\LaravelApiTools\Traits\UuidScopeTrait;
+
+/**
+ * Class DummyClass
+ * @package App\Entities\StResourceKey
+ */
+class DummyClass extends Model
+{
+
+    use UuidScopeTrait;
+
+    protected $guarded = ['id'];
+
+
+}
