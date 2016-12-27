@@ -26,12 +26,12 @@ class UuidScopeTraitTest extends TestCase
     public function it_adds_uuid_scope_to_model()
     {
         $model = new ModelFake([
-            'name' => 'Jose Fonseca',
-            'uuid' => '6e44642b-aa42-4392-b917-34c03ea846e7'
+            'name' => 'Jose Fonseca'
         ]);
         $model->save();
         $this->assertTrue(method_exists($model, 'scopeByUuid'));
-        $this->assertInstanceOf(Model::class, ModelFake::byUuid('6e44642b-aa42-4392-b917-34c03ea846e7')->first());
+        $this->assertNotNull($model->uuid);
+        $this->assertInstanceOf(Model::class, ModelFake::byUuid($model->uuid)->first());
     }
 
 }
