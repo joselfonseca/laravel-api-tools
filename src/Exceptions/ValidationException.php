@@ -27,4 +27,12 @@ class ValidationException extends RuntimeException
         $this->messages = is_array($messages) ? collect($messages) : $messages;
     }
 
+    /**
+     * @return array|\Illuminate\Support\Collection|string
+     */
+    public function gerMessageBag()
+    {
+        return $this->messages;
+    }
+
 }
