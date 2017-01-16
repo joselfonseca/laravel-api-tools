@@ -20,6 +20,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->commands(GenerateEntities::class);
+        $this->app->bind(Handler::class, \Joselfonseca\LaravelApiTools\Exceptions\Handler::class);
     }
 
 
@@ -28,7 +29,7 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Handler::class, \Joselfonseca\LaravelApiTools\Exceptions\Handler::class);
+
     }
 
 }
