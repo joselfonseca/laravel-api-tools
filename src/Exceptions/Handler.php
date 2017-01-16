@@ -21,21 +21,25 @@ class Handler extends \App\Exceptions\Handler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException) {
-            return $this->validationError($exception->gerMessageBag());
-        }
-        if($exception instanceof HttpException) {
-            $body = [
-                'message' => $exception->getMessage(),
-                'code' => $exception->getStatusCode()
-            ];
-            return response($body)->setStatusCode($exception->getStatusCode());
-        }
-        if($exception instanceof ModelNotFoundException){
-            return $this->errorNotFound();
-        }
-        if($exception instanceof UnTransformableResourceException) {
-            return $this->errorInternal('The entity is not transformable, check that the transformer is present and the resource being passed is a Model, Collection or Paginator');
+        if($request->is('api/*')){
+
+            if ($exception instanceof ValidationException) {
+                return $this->validationError($exception->gerMessageBag());
+            }
+            if($exception instanceof HttpException) {
+                $body = [
+                    'message' => $exception->getMessage(),
+                    'code' => $exception->getStatusCode()
+                ];
+                return response($body)->setStatusCode($exception->getStatusCode());
+            }
+            if($exception instanceof ModelNotFoundException){
+                return $this->errorNotFound();
+            }
+            if($exception instanceof UnTransformableResourceException) {
+                return $this->errorInternal('The entity is not transformable, check that the transformer is present and the resource being passed is a Model, Collection or Paginator');
+            }
+
         }
         return parent::render($request, $exception);
     }
