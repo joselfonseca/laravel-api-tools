@@ -19,7 +19,10 @@ class TestCase extends OrchestraTestCase
      */
     protected function getPackageProviders($app)
     {
-        return [LaravelApiToolsServiceProvider::class];
+        return [
+            LaravelApiToolsServiceProvider::class,
+            \Joselfonseca\LaravelApiTools\Tests\ServiceProvider::class
+        ];
     }
 
     /**

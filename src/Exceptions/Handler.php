@@ -3,6 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Joselfonseca\LaravelApiTools\Traits\ResponseBuilder;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -32,6 +33,13 @@ class Handler extends \App\Exceptions\Handler
                     'code' => $exception->getStatusCode()
                 ];
                 return response($body)->setStatusCode($exception->getStatusCode());
+            }
+            if($exception instanceof AuthenticationException) {
+                $body = [
+                    'message' => $exception->getMessage(),
+                    'code' => 401
+                ];
+                return response($body)->setStatusCode(401);
             }
             if($exception instanceof ModelNotFoundException){
                 return $this->errorNotFound();
