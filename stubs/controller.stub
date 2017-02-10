@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StResourceKey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contracts\StResourceKey\DummyContract;
+use Joselfonseca\LaravelApiTools\Traits\ResponseBuilder;
 
 /**
  * Class StResourceKeyController
@@ -12,6 +13,8 @@ use App\Contracts\StResourceKey\DummyContract;
  */
 class StResourceKeyController extends Controller
 {
+
+    use ResponseBuilder;
 
     /**
      * @var Contract
@@ -22,7 +25,7 @@ class StResourceKeyController extends Controller
      * StResourceKeyController constructor.
      * @param Contract $service
      */
-    public function __construct(Contract $service)
+    public function __construct(DummyContract $service)
     {
         $this->service = $service;
     }
@@ -33,7 +36,16 @@ class StResourceKeyController extends Controller
     public function index()
     {
         $model = $this->service->get();
-        return $this->service->transform($model);
+        return response()->json(->service->transform($model));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        return response()->json($this->service->transform($this->service->find($id)));
     }
 
     /**
@@ -43,8 +55,8 @@ class StResourceKeyController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->all();
-        $this->service->create($attributes);
-        return response()->json()->setStatusCode(201);
+        $model = $this->service->create($attributes);
+        return $this->created(url('api/DummyResourceKey/'.$model->uuid), $this->service->transform($model));
     }
 
     /**
@@ -66,6 +78,6 @@ class StResourceKeyController extends Controller
     public function destroy(Request $request, $uuid)
     {
         $this->service->delete($uuid);
-        return response()->json()->setStatusCode(204);
+        return $this->noContent();
     }
 }

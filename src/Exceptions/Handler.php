@@ -22,22 +22,22 @@ class Handler extends \App\Exceptions\Handler
      */
     public function render($request, Exception $exception)
     {
-        if($request->is('api/*')){
+        if($request->is(config('api.prefix', 'api').'/*')){
 
             if ($exception instanceof ValidationException) {
                 return $this->validationError($exception->gerMessageBag());
             }
             if($exception instanceof HttpException) {
                 $body = [
-                    'message' => $exception->getMessage(),
-                    'code' => $exception->getStatusCode()
+                    'code' => $exception->getStatusCode(),
+                    'title' => $exception->getMessage()
                 ];
                 return response($body)->setStatusCode($exception->getStatusCode());
             }
             if($exception instanceof AuthenticationException) {
                 $body = [
-                    'message' => $exception->getMessage(),
-                    'code' => 401
+                    'code' => 401,
+                    'title' => $exception->getMessage()
                 ];
                 return response($body)->setStatusCode(401);
             }

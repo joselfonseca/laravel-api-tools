@@ -144,6 +144,7 @@ class GenerateEntities extends Command
         $controllerName = studly_case($resource['resource_key']).'Controller';
         $controllerStub = str_replace('DummyContract', $serviceName.'Contract', $controllerStub);
         $controllerStub = str_replace('StResourceKey', $namespace, $controllerStub);
+        $controllerStub = str_replace('DummyResourceKey', $resource['resource_key'], $controllerStub);
         if (!$this->files->exists(app_path('Http/Controllers/'.$namespace. '/' . $controllerName . '.php'))) {
             $this->files->put(app_path('Http/Controllers/'.$namespace. '/' . $controllerName . '.php'), $controllerStub);
         }

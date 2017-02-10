@@ -47,12 +47,12 @@ trait ResponseBuilder
      * @param string $errorMessage
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function validationError(MessageBag $bag, $errorMessage = "Validation Error")
+    public function validationError(MessageBag $bag, $errorMessage = "Validation error")
     {
         $response = response([
-            'message' => $errorMessage,
-            'errors' => $bag->toArray(),
-            'code' => 422
+            'code' => 422,
+            'title' => $errorMessage,
+            'errors' => $bag->toArray()
         ]);
         return $response->setStatusCode(422);
     }
