@@ -145,8 +145,8 @@ class GenerateEntities extends Command
         $controllerStub = str_replace('DummyContract', $serviceName.'Contract', $controllerStub);
         $controllerStub = str_replace('StResourceKey', $namespace, $controllerStub);
         $controllerStub = str_replace('DummyResourceKey', $resource['resource_key'], $controllerStub);
-        if (!$this->files->exists(app_path('Http/Controllers/'.$namespace. '/' . $controllerName . '.php'))) {
-            $this->files->put(app_path('Http/Controllers/'.$namespace. '/' . $controllerName . '.php'), $controllerStub);
+        if (!$this->files->exists(app_path('Http/Controllers/'.$namespace. '/Api' . $controllerName . '.php'))) {
+            $this->files->put(app_path('Http/Controllers/'.$namespace. '/Api' . $controllerName . '.php'), $controllerStub);
         }
     }
 
