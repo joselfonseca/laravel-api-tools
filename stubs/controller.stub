@@ -36,7 +36,7 @@ class StResourceKeyController extends Controller
     public function index()
     {
         $model = $this->service->get();
-        return response()->json(->service->transform($model));
+        return response()->json($this->service->transform($model));
     }
 
     /**
