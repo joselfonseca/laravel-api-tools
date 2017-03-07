@@ -11,7 +11,7 @@ use Joselfonseca\LaravelApiTools\Traits\ResponseBuilder;
  * Class StResourceKeyController
  * @package App\Http\Controllers\StResourceKey
  */
-class StResourceKeyController extends Controller
+class ApiStResourceKeyController extends Controller
 {
 
     use ResponseBuilder;
