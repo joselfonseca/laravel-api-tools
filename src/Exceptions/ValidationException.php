@@ -30,7 +30,7 @@ class ValidationException extends RuntimeException
     /**
      * @return array|\Illuminate\Support\Collection|string
      */
-    public function gerMessageBag()
+    public function getMessageBag()
     {
         return $this->messages;
     }
