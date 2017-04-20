@@ -25,7 +25,7 @@ class Handler extends \App\Exceptions\Handler
         if($request->is(config('api.prefix', 'api').'/*')){
 
             if ($exception instanceof ValidationException) {
-                return $this->validationError($exception->gerMessageBag());
+                return $this->validationError($exception->getMessageBag());
             }
             if($exception instanceof HttpException) {
                 $body = [
