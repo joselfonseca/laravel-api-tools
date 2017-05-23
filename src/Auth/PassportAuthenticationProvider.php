@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * Class PassportAuthenticationProvider
  * @package App\Auth
  */
-class PassportAuthenticationProvider extends Authorization
+class PassportAuthenticationProvider implements \Dingo\Api\Contract\Auth\Provider
 {
 
     /**
@@ -37,10 +37,6 @@ class PassportAuthenticationProvider extends Authorization
      */
     public function authenticate(Request $request, Route $route)
     {
-        if(env('APP_ENV') != "testing") {
-            $this->validateAuthorizationHeader($request);
-        }
-
         if ($this->auth->guard('api')->check()) {
             $this->auth->shouldUse('api');
             return $this->auth->guard('api')->user();
@@ -49,11 +45,4 @@ class PassportAuthenticationProvider extends Authorization
         throw new UnauthorizedHttpException('Unable to authenticate.');
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthorizationMethod()
-    {
-        return 'mac';
-    }
 }
