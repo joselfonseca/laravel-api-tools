@@ -4,8 +4,8 @@ namespace Joselfonseca\LaravelApiTools\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use League\Fractal\Serializer\JsonApiSerializer;
 use League\Fractal\Serializer\SerializerAbstract;
-use League\Fractal\Serializer\DataArraySerializer;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Joselfonseca\LaravelApiTools\Exceptions\UnTransformableResourceException;
@@ -24,7 +24,7 @@ trait FractalAbleTrait
      */
     public function setSerializer()
     {
-        return app(DataArraySerializer::class);
+        return app(JsonApiSerializer::class);
     }
 
 
@@ -37,10 +37,10 @@ trait FractalAbleTrait
      */
     public function transformCollection(Collection $collection, $resourceKey = null, $meta = [])
     {
-        $resource =  fractal()
+        $resource = fractal()
             ->collection($collection, $this->setTransformer(), $resourceKey)
             ->serializeWith($this->setSerializer());
-        if(count($meta) > 0){
+        if (count($meta) > 0) {
             $resource->addMeta($meta);
         }
         return $resource->toArray();
@@ -56,10 +56,10 @@ trait FractalAbleTrait
      */
     public function transformItem(Model $item, $resourceKey = null, $meta = [])
     {
-        $resource =  fractal()
+        $resource = fractal()
             ->item($item, $this->setTransformer(), $resourceKey)
             ->serializeWith($this->setSerializer());
-        if(count($meta) > 0){
+        if (count($meta) > 0) {
             $resource->addMeta($meta);
         }
         return $resource->toArray();
@@ -79,7 +79,7 @@ trait FractalAbleTrait
             ->collection($paginator->getCollection(), $this->setTransformer(), $resourceKey)
             ->serializeWith($this->setSerializer())
             ->paginateWith(new IlluminatePaginatorAdapter($paginator));
-        if(count($meta) > 0){
+        if (count($meta) > 0) {
             $resource->addMeta($meta);
         }
         return $resource->toArray();

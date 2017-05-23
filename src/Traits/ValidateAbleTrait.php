@@ -2,8 +2,8 @@
 
 namespace Joselfonseca\LaravelApiTools\Traits;
 
+use Dingo\Api\Exception\ResourceException;
 use Illuminate\Contracts\Validation\Factory as Validator;
-use Joselfonseca\LaravelApiTools\Exceptions\ValidationException;
 
 /**
  * Class ValidateAbleTrait
@@ -18,13 +18,13 @@ trait ValidateAbleTrait
      * @param array $attributes
      * @param $rules
      * @param $messages
-     * @throws ValidationException
+     * @throws ResourceException
      */
     public function runValidator(array $attributes, $rules, $messages)
     {
         $validator = app(Validator::class)->make($attributes, $rules, $messages);
         if ($validator->fails()) {
-            throw new ValidationException($validator->getMessageBag());
+            throw new ResourceException("Validation Error", $validator->getMessageBag());
         }
     }
 }

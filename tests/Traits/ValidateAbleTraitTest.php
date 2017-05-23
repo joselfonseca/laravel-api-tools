@@ -13,7 +13,7 @@ class ValidateAbleTraitTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Joselfonseca\LaravelApiTools\Exceptions\ValidationException
+     * @expectedException \Dingo\Api\Exception\ResourceException
      */
     public function it_throws_validation_exception_on_invalid_input()
     {

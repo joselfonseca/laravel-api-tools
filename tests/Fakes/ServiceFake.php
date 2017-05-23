@@ -2,6 +2,7 @@
 
 namespace Joselfonseca\LaravelApiTools\Tests\Fakes;
 
+use League\Fractal\Serializer\DataArraySerializer;
 use Joselfonseca\LaravelApiTools\Contracts\FractalAble;
 use Joselfonseca\LaravelApiTools\Contracts\ValidateAble;
 use Joselfonseca\LaravelApiTools\Traits\FractalAbleTrait;
@@ -27,6 +28,11 @@ class ServiceFake implements FractalAble, ValidateAble
     public function setTransformer()
     {
         return app(TransformerFake::class);
+    }
+
+    public function setSerializer()
+    {
+        return app(DataArraySerializer::class);
     }
 
     /**
