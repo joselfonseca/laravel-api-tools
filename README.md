@@ -9,29 +9,30 @@ laravel-api-tools
 
 ## Versions
 
-Please note this is the 2.0 version which is a complete re write, if you are looking for the previous version with Dingo, check the 1.4 branch
+Please note this is the 3.0 version which brings back the power of [Dingo API](https://github.com/dingo/api) and adds a Passport Authentication provider that allow us to use passport in the Dingo Auth implementation, this will also allow us to use different auth providers for different routes. 
 
 ## Installation
 
 To install this update your composer.json file to require
 
 ```json
-    "joselfonseca/laravel-api-tools" : "~2.0"
+    "joselfonseca/laravel-api-tools" : "~3.0"
 ```
-Once the dependencies have been downloaded, add the service provider to your config/app.php file
+Once the dependencies have been downloaded, add the service provider for dingo and Laravel API Tools to your config/app.php file
 
 ```php
     'providers' => [
         ...
+        Dingo\Api\Provider\LaravelServiceProvider::class,
         Joselfonseca\LaravelApiTools\Providers\LaravelApiToolsServiceProvider::class
         ...
     ]
 ```
-You are done with the installation!
+You are done with the installation, please refer to the [configuration documentation](https://github.com/joselfonseca/laravel-api-tools/tree/master/docs). !
 
 ## Documentation
 
-For documentation on this package, please visit the [docs folder](https://github.com/joselfonseca/laravel-api-tools/tree/2.2/docs).
+For documentation on this package, please visit the [docs folder](https://github.com/joselfonseca/laravel-api-tools/tree/master/docs).
 
 ## Change log
 
