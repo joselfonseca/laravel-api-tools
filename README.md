@@ -31,7 +31,7 @@ You are done with the installation!
 
 ## Documentation
 
-For documentation on this package, please visit the [wiki](https://github.com/joselfonseca/laravel-api-tools/wiki).
+For documentation on this package, please visit the [docs folder](https://github.com/joselfonseca/laravel-api-tools/tree/2.2/docs).
 
 ## Change log
 
