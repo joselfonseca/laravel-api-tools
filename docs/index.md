@@ -5,5 +5,3 @@ This package is a collection of helpers, contracts and implementations I often u
 - [Installation](1.Installation.md)
 - [Fractal Integration](2.Fractal.md)
 - [Validation Trait](3.Validation.md)
-- [Response Builder](4.Response.md)
-- [Generators](4.Generators.md)
