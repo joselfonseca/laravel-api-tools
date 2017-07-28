@@ -3,6 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Exceptions;
 
 use RuntimeException;
+use Illuminate\Support\MessageBag;
 
 /**
  * Class ValidationException
@@ -24,11 +25,11 @@ class ValidationException extends RuntimeException
      */
     public function __construct($messages)
     {
-        $this->messages = is_array($messages) ? collect($messages) : $messages;
+        $this->messages = is_array($messages) ? new MessageBag($messages) : $messages;
     }
 
     /**
-     * @return array|\Illuminate\Support\Collection|string
+     * @return array|\Illuminate\Support\MessageBag|string
      */
     public function getMessageBag()
     {
