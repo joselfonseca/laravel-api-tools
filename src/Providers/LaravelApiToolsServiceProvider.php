@@ -3,6 +3,7 @@
 namespace Joselfonseca\LaravelApiTools\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Joselfonseca\LaravelApiTools\Console\GenerateEntities;
 
 /**
  * Class LaravelApiToolsServiceProvider
@@ -26,7 +27,9 @@ class LaravelApiToolsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->commands([
+            GenerateEntities::class
+        ]);
     }
 
 }

@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Contracts;
+
+use App\Entities\DummyModel;
+use Dingo\Api\Exception\ResourceException;
+
+/**
+ * Class DummyClass
+ * @package App\Contracts
+ */
+interface DummyClass
+{
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function get($limit = 20);
+
+    /**
+     * @param int|string $id
+     * @return DummyModel
+     */
+    public function find($id);
+
+    /**
+     * @param array $attributes
+     * @return DummyModel
+     * @throws ResourceException
+     */
+    public function create(array $attributes = []);
+
+    /**
+     * @param int|string $id
+     * @param array $attributes
+     * @return DummyModel
+     * @throws ResourceException
+     */
+    public function update($id, array $attributes = []);
+
+    /**
+     * @param int|string $id
+     * @return bool
+     */
+    public function delete($id);
+
+}

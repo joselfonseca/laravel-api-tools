@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Transformers;
+
+use App\Entities\DummyModel;
+use League\Fractal\TransformerAbstract;
+
+/**
+ * Class DummyClass
+ * @package App\Transformers
+ */
+class DummyClass extends TransformerAbstract
+{
+    /**
+     * @param DummyModel $model
+     * @return array
+     */
+    public function transform(DummyModel $model)
+    {
+        return [
+            'id' => $model->uuid,
+            'created_at' => $model->created_at->toIso8601String(),
+            'updated_at' => $model->updated_at->toIso8601String(),
+        ];
+    }
+
+}
