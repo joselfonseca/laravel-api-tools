@@ -109,6 +109,39 @@ class FilterableTraitTest extends TestCase
         $this->assertEquals($expected, $addedFilters);
     }
 
+    public function testItSetsFVROfFieldsThatHasValueAs0()
+    {
+        $model = new ModelFake;
+
+        $filterableFields = [
+            'name' => 'end',
+            'email' => 'partial',
+            'uuid' => 'exact',
+        ];
+
+        $service = Mockery::mock('Joselfonseca\LaravelApiTools\Tests\Fakes\ServiceFake[getFilterableFields]');
+
+        $service->shouldReceive('getFilterableFields')
+            ->andReturn($filterableFields);
+
+        $requestFields = [
+            'name' => '0',
+            'email' => $this->_faker->email,
+            'uuid' => null,
+        ];
+
+        $service->addFilter($requestFields);
+
+        $addedFilters = $service->getFilters();
+
+        $expected = [
+            'name' => 'end',
+            'email' => 'partial',
+        ];
+
+        $this->assertEquals($expected, $addedFilters);
+    }
+
     public function testParseRuleToBeApplied()
     {
         $service = new ServiceFake;

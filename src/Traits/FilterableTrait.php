@@ -65,7 +65,7 @@ trait FilterableTrait
         $rules = $this->getFilterableFields();
 
         foreach ($request as $field => $value) {
-            if (array_key_exists($field, $rules) && $value) {
+            if (array_key_exists($field, $rules) && !is_null($value) && $value !== "") {
                 $this->_filters[$field] = $rules[$field];
             }
         }
