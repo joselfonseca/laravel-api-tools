@@ -13,10 +13,11 @@ interface DummyClass
 {
 
     /**
-     * @param int $limit
-     * @return mixed
-     */
-    public function get($limit = 20);
+	 * @param array $attributes
+	 * @param int $limit
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|static[]
+	 */
+    public function get(array $attributes = [], $limit = 20);
 
     /**
      * @param int|string $id

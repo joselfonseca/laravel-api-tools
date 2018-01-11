@@ -7,10 +7,14 @@ use App\Contracts\DummyContract;
 use App\Transformers\DummyTransformer;
 use League\Fractal\TransformerAbstract;
 use Dingo\Api\Exception\ResourceException;
+use League\Fractal\Serializer\DataArraySerializer;
 use Joselfonseca\LaravelApiTools\Contracts\FractalAble;
+use Joselfonseca\LaravelApiTools\Traits\FilterableTrait;
 use Joselfonseca\LaravelApiTools\Contracts\ValidateAble;
 use Joselfonseca\LaravelApiTools\Traits\FractalAbleTrait;
 use Joselfonseca\LaravelApiTools\Traits\ValidateAbleTrait;
+use Joselfonseca\LaravelApiTools\Traits\OrderQueryResultHelper;
+use Joselfonseca\LaravelApiTools\Traits\ProcessMultipleParameterHelper;
 
 /**
  * Class DummyClass
@@ -19,7 +23,11 @@ use Joselfonseca\LaravelApiTools\Traits\ValidateAbleTrait;
 class DummyClass implements FractalAble, ValidateAble, DummyContract
 {
 
-    use FractalAbleTrait, ValidateAbleTrait;
+    use FractalAbleTrait,
+    	ValidateAbleTrait,
+    	FilterableTrait,
+    	OrderQueryResultHelper,
+    	ProcessMultipleParameterHelper;
 
     /**
      * @var array
@@ -75,12 +83,24 @@ class DummyClass implements FractalAble, ValidateAble, DummyContract
     }
 
     /**
-     * @param int $limit
-     * @return mixed
-     */
-    public function get($limit = 20)
+	 * @return string
+	 */
+	public function setSerializer()
+	{
+		return DataArraySerializer::class;
+	}
+
+    /**
+	 * @param array $attributes
+	 * @param int $limit
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|static[]
+	 */
+    public function get(array $attributes = [], $limit = 20)
     {
         $model = $this->model->with($this->includes);
+        $this->applyFilters($model, $attributes);
+        $this->processOrderingRules($attributes);
+		$this->applyOrderingRules($model);
         if (!empty($limit)) {
             return $model->paginate($limit);
         }
@@ -133,4 +153,14 @@ class DummyClass implements FractalAble, ValidateAble, DummyContract
         $model->delete();
         return true;
     }
+
+    /**
+	 * @return array
+	 */
+	public function getFilterableFields()
+	{
+		return [
+
+		];
+	}
 }
