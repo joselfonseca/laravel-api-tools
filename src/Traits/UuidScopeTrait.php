@@ -22,14 +22,16 @@ trait UuidScopeTrait
     }
 
     /**
-     * Boot function from laravel.
+     * Boot the uuid scope trait for a model.
+     *
+     * @return void
      */
-    protected static function boot()
+    protected static function bootUuidScopeTrait()
     {
-        parent::boot();
-
         static::creating(function ($model) {
-            $model->uuid = Uuid::generate()->string;
+            if (empty($model->uuid)) {
+                $model->uuid = Uuid::generate()->string;
+            }
         });
     }
 }

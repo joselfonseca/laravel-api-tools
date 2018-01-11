@@ -102,7 +102,9 @@ class DummyClass implements FractalAble, ValidateAble, DummyContract
         $this->processOrderingRules($attributes);
 		$this->applyOrderingRules($model);
         if (!empty($limit)) {
-            return $model->paginate($limit);
+        	$paginator = $model->paginate($limit);
+			$paginator->appends('limit', $limit);
+            return $paginator;
         }
         return $model->get();
     }
