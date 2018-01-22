@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use Dingo\Api\Routing\Helpers;
+use App\Contracts\DummyContract;
+use App\Http\Controllers\Controller;
+use Dingo\Api\Exception\StoreResourceFailedException;
+
+/**
+ * Class DummyClass
+ *
+ * @package App\Http\Controllers\Api
+ */
+class DummyClass extends Controller
+{
+    use Helpers;
+
+    /**
+     * @var \App\Contracts\DummyContract
+     */
+    protected $service;
+
+    /**
+     * DummyClass constructor.
+     *
+     * @param \App\Contracts\DummyContract $service
+     */
+    public function __construct(DummyContract $service)
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
+    public function index(Request $request)
+    {
+        return $this->response->array($this->service->transform($this->service->get($request->all(), 50)));
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        return $this->response->array($this->service->transform($this->service->find($id)));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
+    public function store(Request $request)
+    {
+        $model = $this->service->create($request->all());
+        return $this->response->created(url('api/ResourceKey/'.$model->uuid), $this->service->transform($model));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function update(Request $request, $id)
+    {
+        $model = $this->service->update($id, $request->all());
+        return $this->response->array($this->service->transform($model));
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        $this->service->delete($id);
+        return $this->response->noContent();
+    }
+}

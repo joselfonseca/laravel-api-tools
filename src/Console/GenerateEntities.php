@@ -6,6 +6,11 @@ namespace Joselfonseca\LaravelApiTools\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
+/**
+ * Class GenerateEntities
+ *
+ * @package Joselfonseca\LaravelApiTools\Console
+ */
 class GenerateEntities extends Command
 {
     /**
@@ -50,6 +55,7 @@ class GenerateEntities extends Command
         $this->generateService($resource);
         $this->generateContract($resource);
         $this->generateTransformer($resource);
+        $this->generateController($resource);
     }
 
     /**
@@ -108,6 +114,23 @@ class GenerateEntities extends Command
             $this->files->put(app_path('Services/' . $serviceName . '.php'), $serviceStub);
         }
     }
+
+    /**
+     * @param $resource
+     */
+    protected function generateController($resource)
+    {
+        $controllerStub = $this->files->get(__DIR__ . '/../../stubs/controller.stub');
+        $controllerName = studly_case($resource['resource_key']).'Controller';
+        $serviceName = studly_case($resource['resource_key']).'Service';
+        $controllerStub = str_replace('DummyClass', $controllerName, $controllerStub);
+        $controllerStub = str_replace('DummyContract', $serviceName.'Contract', $controllerStub);
+        $controllerStub = str_replace('ResourceKey', $resource['resource_key'], $controllerStub);
+        if (!$this->files->exists(app_path('Http/Controllers/Api/' . $controllerName . '.php'))) {
+            $this->files->put(app_path('Http/Controllers/Api/' . $controllerName . '.php'), $controllerStub);
+        }
+    }
+
     /**
      *
      */
@@ -124,6 +147,9 @@ class GenerateEntities extends Command
         }
         if(!is_dir(app_path('Services/'))){
             mkdir(app_path('Services/'));
+        }
+        if(!is_dir(app_path('Http/Controllers/Api/'))){
+            mkdir(app_path('Http/Controllers/Api/'));
         }
     }
 }
