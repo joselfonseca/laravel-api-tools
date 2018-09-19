@@ -9,7 +9,7 @@ laravel-api-tools
 
 ## Versions
 
-Please note this is the 3.0 version which brings back the power of [Dingo API](https://github.com/dingo/api) and adds a Passport Authentication provider that allow us to use passport in the Dingo Auth implementation, this will also allow us to use different auth providers for different routes. 
+Please note this is the 3.1 version which brings back the power of [Dingo API](https://github.com/dingo/api) and adds a Passport Authentication provider that allow us to use passport in the Dingo Auth implementation, this will also allow us to use different auth providers for different routes.
 
 ## Installation
 
