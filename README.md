@@ -16,7 +16,7 @@ Please note this is the 3.0 version which brings back the power of [Dingo API](h
 To install this update your composer.json file to require
 
 ```json
-    "joselfonseca/laravel-api-tools" : "~3.0"
+    "joselfonseca/laravel-api-tools" : "~3.1"
 ```
 Once the dependencies have been downloaded, add the service provider for dingo and Laravel API Tools to your config/app.php file
 
