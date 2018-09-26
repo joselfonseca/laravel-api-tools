@@ -29,6 +29,13 @@
         "Joselfonseca\\LaravelApiTools\\Tests\\": "tests/"
       }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Joselfonseca\\LaravelApiTools\\Providers\\LaravelApiToolsServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
