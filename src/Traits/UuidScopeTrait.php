@@ -2,7 +2,7 @@
 
 namespace Joselfonseca\LaravelApiTools\Traits;
 
-use Uuid;
+use Illuminate\Support\Str;
 
 /**
  * Class UuidScopeTrait
@@ -30,7 +30,7 @@ trait UuidScopeTrait
     {
         static::creating(function ($model) {
             if (empty($model->uuid)) {
-                $model->uuid = Uuid::generate()->string;
+                $model->uuid = Str::uuid();
             }
         });
     }
