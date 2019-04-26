@@ -11,7 +11,7 @@ class UuidScopeTraitTest extends TestCase
     /**
      * Run migrations for the tests
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->artisan('migrate', ['--database' => 'testbench']);

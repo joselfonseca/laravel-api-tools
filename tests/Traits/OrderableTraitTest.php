@@ -11,13 +11,13 @@ class OrderQueryResultHelperTest extends TestCase
 {
     protected $_faker;
 
-    protected function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->_faker = Faker::create();
     }
 
-    protected function tearDown()
+    protected function tearDown() : void
     {
         parent::tearDown();
         Mockery::close();

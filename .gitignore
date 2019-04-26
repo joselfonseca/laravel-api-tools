@@ -4,3 +4,4 @@ composer.lock
 /nbproject
 /site
 /build
+.idea/

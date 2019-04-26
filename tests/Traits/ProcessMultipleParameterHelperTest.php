@@ -10,7 +10,7 @@ class ProcessMultipleParameterHelperTest extends TestCase
 {
     protected $_faker;
 
-    protected function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->_faker = Faker::create();

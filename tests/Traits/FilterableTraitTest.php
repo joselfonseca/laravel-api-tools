@@ -12,7 +12,7 @@ class FilterableTraitTest extends TestCase
 {
     protected $_faker;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->_faker = Faker::create();
@@ -359,7 +359,7 @@ class FilterableTraitTest extends TestCase
         $model = Mockery::mock('ModelFake');
 
         $model->shouldReceive('where')
-            ->with('name', '<>', $requestFields['name'])
+            ->with('name', '<=', $requestFields['name'])
             ->once()
             ->andReturn(Mockery::self());
 
