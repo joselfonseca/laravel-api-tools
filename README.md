@@ -13,21 +13,10 @@ Please note this is the 3.2 version which brings back the power of [Dingo API](h
 
 ## Installation
 
-To install this update your composer.json file to require
-
-```json
-    "joselfonseca/laravel-api-tools" : "~3.2"
+```bash
+composer require joselfonseca/laravel-api-tools
 ```
-Once the dependencies have been downloaded, add the service provider for dingo and Laravel API Tools to your config/app.php file
 
-```php
-    'providers' => [
-        ...
-        Dingo\Api\Provider\LaravelServiceProvider::class,
-        Joselfonseca\LaravelApiTools\Providers\LaravelApiToolsServiceProvider::class
-        ...
-    ]
-```
 You are done with the installation, please refer to the [configuration documentation](https://github.com/joselfonseca/laravel-api-tools/tree/master/docs). !
 
 ## Documentation
