@@ -102,11 +102,11 @@ class FractalAbleTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \Joselfonseca\LaravelApiTools\Exceptions\UnTransformableResourceException
      * @test
      */
     public function it_throws_exception_if_it_cant_transform()
     {
+        $this->expectException(\Joselfonseca\LaravelApiTools\Exceptions\UnTransformableResourceException::Class);
         $service = $this->makeTestService();
         $service->transform([]);
     }

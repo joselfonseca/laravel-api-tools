@@ -5,3 +5,4 @@ composer.lock
 /site
 /build
 .idea/
+.phpunit.result.cache

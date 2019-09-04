@@ -13,10 +13,10 @@ class ValidateAbleTraitTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Dingo\Api\Exception\ResourceException
      */
     public function it_throws_validation_exception_on_invalid_input()
     {
+        $this->expectException(\Dingo\Api\Exception\ResourceException::class);
         $service = new ServiceFake();
         $service->create([]);
     }
