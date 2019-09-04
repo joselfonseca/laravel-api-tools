@@ -7,10 +7,6 @@ laravel-api-tools
 [![Latest Unstable Version](https://poser.pugx.org/joselfonseca/laravel-api-tools/v/unstable.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools) 
 [![License](https://poser.pugx.org/joselfonseca/laravel-api-tools/license.svg)](https://packagist.org/packages/joselfonseca/laravel-api-tools)
 
-## Versions
-
-Please note this is the 3.2 version which brings back the power of [Dingo API](https://github.com/dingo/api) and adds a Passport Authentication provider that allow us to use passport in the Dingo Auth implementation, this will also allow us to use different auth providers for different routes.
-
 ## Installation
 
 ```bash
