@@ -10,15 +10,14 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "spatie/laravel-fractal": "^5.7",
-        "dingo/api": "^3.0"
+        "php": "^8.0",
+        "spatie/laravel-fractal": "^6.0",
+        "api-ecosystem-for-laravel/dingo-api": "^4.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.3",
-        "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^5.0",
-        "orchestra/database": "^5.0"
+        "phpunit/phpunit": "^10.1",
+        "orchestra/testbench": "^8.0",
+        "mockery/mockery": "^1.5"
     },
     "autoload": {
         "psr-4": {
